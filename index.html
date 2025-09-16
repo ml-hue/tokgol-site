@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tokgol — Talento futbolístico tokenizado</title>
+  <meta name="description" content="Tokgol está construyendo una plataforma para invertir en talento futbolístico. Sitio en desarrollo. Únete a la lista de espera." />
+  <meta property="og:title" content="Tokgol — Sitio en desarrollo" />
+  <meta property="og:description" content="Estamos construyendo una plataforma para invertir en talento futbolístico. Súmate a la lista de espera." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/og-image.jpg" />
+  <meta name="theme-color" content="#0b0b0c" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0c;
+      --panel:#101114;
+      --soft:#1a1b20;
+      --text:#e8e8ea;
+      --muted:#a0a3ad;
+      --gold:#d4af37;
+      --gold-soft:#b5932e;
+      --glow: 0 0 40px rgba(212,175,55,.18);
+      --radius: 18px;
+      --ring: 1px solid rgba(212,175,55,.25);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(212,175,55,.10), transparent 60%),
+                  radial-gradient(900px 700px at -10% 20%, rgba(212,175,55,.06), transparent 55%),
+                  var(--bg);
+      color:var(--text); line-height:1.5; letter-spacing:.2px;
+      overflow-x:hidden;
+    }
+    a{color:var(--text); text-decoration:none}
+    .wrap{max-width:1200px; margin:0 auto; padding:32px 20px}
+
+    header{position:sticky; top:0; z-index:20; backdrop-filter:saturate(120%) blur(10px); background:linear-gradient(180deg, rgba(16,17,20,.85), rgba(16,17,20,.55) 60%, transparent); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.5px}
+    .logo{width:28px; height:28px; border-radius:8px; background: conic-gradient(from 210deg, rgba(212,175,55,.85), rgba(212,175,55,.25) 40%, rgba(212,175,55,.9) 70%, rgba(212,175,55,.5));
+          box-shadow: var(--glow), inset 0 0 12px rgba(212,175,55,.45); border:1px solid rgba(212,175,55,.4)}
+    .tag{font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.08); padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.02)}
+
+    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:36px; align-items:center; padding:70px 0 32px}
+    .kicker{display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(212,175,55,.25); color:var(--gold); background:rgba(212,175,55,.06);
+            border-radius:999px; padding:6px 12px; font-weight:600; box-shadow:var(--glow)}
+    .kicker .dot{width:8px; height:8px; border-radius:999px; background:var(--gold); box-shadow:0 0 14px rgba(212,175,55,.9)}
+    h1{font-size: clamp(36px, 5vw, 64px); line-height:1.05; margin:14px 0 12px; letter-spacing:.2px}
+    .hdesc{font-size: clamp(16px, 2.4vw, 18px); color:var(--muted); max-width:52ch}
+    .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:14px 18px; border-radius:12px; font-weight:700; letter-spacing:.2px; transition:transform .1s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease}
+    .btn.primary{background:linear-gradient(180deg, rgba(212,175,55,.92), rgba(212,175,55,.82)); color:#0a0a0b; box-shadow:0 10px 22px rgba(212,175,55,.18)}
+    .btn.primary:hover{transform:translateY(-1px); box-shadow:0 16px 28px rgba(212,175,55,.24)}
+    .btn.ghost{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.02)}
+    .btn.ghost:hover{background:rgba(255,255,255,.05)}
+
+    .phone{position:relative; aspect-ratio:10/16; border-radius:32px; background:linear-gradient(160deg, #14151a, #0f1014 60%, #0c0d10);
+           border:1px solid rgba(255,255,255,.06); box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03)}
+    .phone:before{content:""; position:absolute; inset:1px; border-radius:31px; background:
+        radial-gradient(800px 400px at 80% -10%, rgba(212,175,55,.15), transparent 70%),
+        radial-gradient(600px 380px at 10% 110%, rgba(212,175,55,.10), transparent 70%),
+        linear-gradient(180deg, #0f1014, #0a0a0c);
+        border:1px solid rgba(255,255,255,.03)}
+    .ticker{position:absolute; left:10%; right:10%; bottom:28px; display:flex; gap:10px; overflow:hidden; mask-image:linear-gradient(to right, transparent, #000 12%, #000 88%, transparent)}
+    .chip{flex:0 0 auto; padding:8px 12px; border-radius:999px; border:1px solid rgba(212,175,55,.25); background:rgba(212,175,55,.06); color:var(--gold); font-weight:600; box-shadow:var(--glow)}
+
+    .section{padding:70px 0}
+    .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px}
+    .card{border-radius:var(--radius); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); border:1px solid rgba(255,255,255,.06); padding:24px; position:relative}
+    .card:after{content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; box-shadow:var(--glow)}
+    .card h3{margin:6px 0 6px}
+    .eyebrow{font-size:12px; letter-spacing:.35px; color:var(--gold); font-weight:700}
+    .muted{color:var(--muted)}
+
+    .timeline{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
+    .step{padding:20px; background:var(--soft); border-radius:14px; border:1px solid rgba(255,255,255,.06)}
+    .step .dot{width:10px; height:10px; border-radius:999px; background:var(--gold); display:inline-block; box-shadow:0 0 12px rgba(212,175,55,.9); margin-right:8px}
+
+    footer{border-top:1px solid rgba(255,255,255,.06); background:linear-gradient(180deg, rgba(16,17,20,.4), rgba(16,17,20,.9)); padding:36px 0 60px}
+    .foot{display:flex; flex-direction:column; gap:12px; color:var(--muted)}
+    .contact{display:flex; gap:20px; flex-wrap:wrap}
+    .contact a{color:var(--text)}
+
+    form{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    input[type=email]{background:#0d0e12; border:1px solid rgba(255,255,255,.1); color:var(--text); padding:14px 14px; border-radius:12px; min-width:260px; outline:none}
+    input[type=email]:focus{border-color:rgba(212,175,55,.45); box-shadow:0 0 0 4px rgba(212,175,55,.12)}
+
+    @media (max-width: 960px){
+      .hero{grid-template-columns:1fr; padding-top:36px}
+      .grid{grid-template-columns:1fr}
+      .timeline{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>TOKGOL</span>
+      </div>
+      <div class="tag">Sitio en desarrollo</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <span class="kicker"><span class="dot"></span> Próximamente</span>
+        <h1>Invierte en <span style="color:var(--gold); text-shadow:0 4px 40px rgba(212,175,55,.18)">talento futbolístico</span> con transparencia.</h1>
+        <p class="hdesc">Estamos construyendo una plataforma para conectar a inversionistas con carreras de futbolistas prometedores, con trazabilidad y experiencia de clase mundial. Únete para recibir las novedades del MVP.</p>
+        <div class="cta">
+          <a class="btn primary" href="#waitlist">Unirme a la lista de espera</a>
+          <a class="btn ghost" href="#roadmap">Ver hoja de ruta</a>
+        </div>
+      </div>
+      <div>
+        <div class="phone" role="img" aria-label="Vista previa de la app de Tokgol">
+          <div class="ticker" aria-hidden="true">
+            <div class="chip">Analytics en tiempo real</div>
+            <div class="chip">Contratos digitales</div>
+            <div class="chip">KYC / AML</div>
+            <div class="chip">Custodia</div>
+            <div class="chip">Pagos globales</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="grid">
+        <div class="card">
+          <div class="eyebrow">Transparencia</div>
+          <h3>Tokenización responsable</h3>
+          <p class="muted">Estructuras claras orientadas a la protección del inversionista y del jugador, con procesos de cumplimiento integrados.</p>
+        </div>
+        <div class="card">
+          <div class="eyebrow">Tecnología</div>
+          <h3>Arquitectura preparada para escalar</h3>
+          <p class="muted">Infraestructura moderna, integraciones seguras y una experiencia simple para operar desde cualquier lugar.</p>
+        </div>
+        <div class="card">
+          <div class="eyebrow">Comunidad</div>
+          <h3>Alianzas y acceso</h3>
+          <p class="muted">Conectamos clubes, talentos y capital a través de una comunidad global con foco en LATAM.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="waitlist">
+      <div class="card" style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
+        <div style="display:flex; align-items:center; gap:10px"><span class="eyebrow">Únete</span><span class="muted">— Recibe avances del MVP</span></div>
+        <form action="https://formsubmit.co/el/fufahu" method="POST">
+          <input type="hidden" name="_subject" value="Nuevo registro a la waitlist de Tokgol" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value="/thanks.html" />
+
+          <label for="email" class="visually-hidden">Correo</label>
+          <input id="email" name="email" type="email" placeholder="tu@email.com" required>
+          <button class="btn primary" type="submit">Anotarme</button>
+        </form>
+        <small class="muted">Prometemos no hacer spam. Podrás desuscribirte cuando quieras.</small>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap">
+      <div class="timeline">
+        <div class="step">
+          <div><span class="dot"></span><strong>Q3 2025</strong></div>
+          <div class="muted">Definición de MVP, diseño de experiencia y arquitectura inicial.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q4 2025</strong></div>
+          <div class="muted">Desarrollo del MVP y validaciones con primeros usuarios.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q1 2026</strong></div>
+          <div class="muted">Pilotos controlados con clubes y agentes aliados.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q2 2026</strong></div>
+          <div class="muted">Lanzamiento progresivo y expansión por mercados prioritarios.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="brand" style="gap:10px">
+        <div class="logo" aria-hidden="true"></div>
+        <strong>TOKGOL</strong>
+      </div>
+      <div class="contact">
+        <span>Contacto:</span>
+        <a href="tel:+595981524777">Teléfono: +595 981 524 777</a>
+        <span>·</span>
+        <a href="mailto:ml@seller.consulting">ml@seller.consulting</a>
+      </div>
+      <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados. — Sitio en desarrollo.</small>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const ticker = document.querySelector('.ticker');
+    if(ticker){
+      let x = 0; const speed = 0.4;
+      function loop(){
+        x -= speed; ticker.style.transform = `translateX(${x}px)`;
+        if(Math.abs(x) > 160){
+          const first = ticker.firstElementChild; ticker.appendChild(first); x = 0;
+        }
+        requestAnimationFrame(loop);
+      } requestAnimationFrame(loop);
+    }
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.animate([
+            {opacity:0, transform:'translateY(14px)'},
+            {opacity:1, transform:'translateY(0)'}
+          ], {duration:600, easing:'cubic-bezier(.22,.61,.36,1)', fill:'forwards'});
+          observer.unobserve(e.target);
+        }
+      })
+    }, {threshold:.1});
+    document.querySelectorAll('.card, .step, .hero > div:first-child').forEach(el=>observer.observe(el));
+    const style = document.createElement('style');
+    style.innerHTML = `.visually-hidden{position:absolute!important; width:1px!important; height:1px!important; padding:0!important; margin:-1px!important; overflow:hidden!important; clip:rect(0,0,0,0)!important; white-space:nowrap!important; border:0!important}`;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
