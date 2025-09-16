@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>¡Gracias! — Tokgol</title>
+  <meta name="description" content="Gracias por unirte a la lista de espera de Tokgol" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0b0b0c; --panel:#101114; --text:#e8e8ea; --muted:#a0a3ad; --gold:#d4af37}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family:Inter,system-ui,sans-serif; background:radial-gradient(1200px 800px at 80% -10%, rgba(212,175,55,.10), transparent 60%), radial-gradient(900px 700px at -10% 20%, rgba(212,175,55,.06), transparent 55%), var(--bg); color:var(--text)}
+    .wrap{min-height:100%; display:flex; align-items:center; justify-content:center; padding:40px}
+    .card{max-width:760px; width:100%; background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); border:1px solid rgba(255,255,255,.06); border-radius:18px; padding:36px; text-align:center; box-shadow:0 0 40px rgba(212,175,55,.18)}
+    .logo{width:40px; height:40px; border-radius:10px; margin:0 auto 14px; background:conic-gradient(from 210deg, rgba(212,175,55,.85), rgba(212,175,55,.25) 40%, rgba(212,175,55,.9) 70%, rgba(212,175,55,.5)); border:1px solid rgba(212,175,55,.4)}
+    h1{font-size:clamp(32px,4.5vw,56px); line-height:1.08; margin:10px 0 10px}
+    p{color:var(--muted); font-size:clamp(16px,2.4vw,18px)}
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:14px 18px; border-radius:12px; font-weight:800; background:linear-gradient(180deg, rgba(212,175,55,.92), rgba(212,175,55,.82)); color:#0a0a0b; text-decoration:none; margin-top:22px}
+    .sub{margin-top:16px; color:var(--muted)}
+    footer{margin-top:26px; font-size:14px; color:var(--muted)}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="card">
+      <div class="logo" aria-hidden="true"></div>
+      <h1>¡Gracias por unirte! ✨</h1>
+      <p>Quedate atento a <strong>Tokgol</strong>, ¡se vienen cosas increíbles!</p>
+      <a class="btn" href="/">Volver al inicio</a>
+      <div class="sub">Te avisaremos por correo cuando lancemos las próximas novedades.</div>
+      <footer>© <span id="year"></span> Tokgol</footer>
+    </div>
+  </main>
+  <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
+</body>
+</html>
