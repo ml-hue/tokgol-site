@@ -61,33 +61,42 @@
     .btn.ghost{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.02)}
     .btn.ghost:hover{background:rgba(255,255,255,.05)}
 
-    /* NUEVO panel visual con degradado + imagen (quita bloque negro) */
+    /* Panel visual con degradado + imagen borrosa */
     .hero-right{
       position:relative;
       min-height: clamp(260px, 36vw, 520px);
       border-radius: 18px;
       overflow:hidden;
-      /* respaldo si no carga la imagen */
-      background-color:#0c0c0f;
-      /* Capas: destello + degradados + imagen borrosa */
+      background-color:#0c0c0f; /* respaldo */
+      /* Capas base: destello + degradados + imagen difusa (debajo via ::before) */
       background-image:
         radial-gradient(120% 120% at 100% 0%, rgba(22,163,74,0.22) 0%, rgba(10,10,12,0.0) 45%),
-        linear-gradient(160deg, #0c0c12 0%, #0b1214 45%, #07160e 100%),
-        image-set(
-          url("./assets/hero-app.webp") type("image/webp") 1x,
-          url("./assets/hero-app.jpg") type("image/jpeg") 1x
-        );
-      background-size: cover, cover, cover;
-      background-position: center, center, center;
+        linear-gradient(160deg, #0c0c12 0%, #0b1214 45%, #07160e 100%);
+      background-size: cover, cover;
+      background-position: center, center;
       background-repeat:no-repeat;
-      background-blend-mode: screen, normal, normal;
+      background-blend-mode: screen, normal;
       border:1px solid rgba(255,255,255,.06);
       box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
     }
-    /* Capa de “vidrio suave” y grano sutil (ilusión sin revelar app) */
+    /* Imagen borrosa como capa inferior */
+    .hero-right::before{
+      content:"";
+      position:absolute; inset:0; z-index:0;
+      background-image: image-set(
+        url("./assets/hero-app-blur.webp") type("image/webp") 1x,
+        url("./assets/hero-app-blur.jpg")  type("image/jpeg") 1x
+      );
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(14px);
+      transform: scale(1.06); /* compensa recorte del blur */
+    }
+    /* “Vidrio” + grano sutil por encima */
     .hero-right::after{
       content:"";
-      position:absolute; inset:0;
+      position:absolute; inset:0; z-index:1;
       background:
         radial-gradient(80% 60% at 80% 20%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 60%),
         linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.35) 100%),
@@ -97,8 +106,10 @@
       mix-blend-mode: overlay;
       pointer-events:none;
     }
+    /* Contenido dentro del panel siempre por encima */
+    .hero-right > *{ position:relative; z-index:2; }
 
-    /* “Phone” como objeto decorativo dentro del panel (opcional) */
+    /* Teléfono decorativo */
     .phone{
       position:absolute;
       right: clamp(12px, 3vw, 24px);
@@ -143,7 +154,6 @@
       .hero{grid-template-columns:1fr; padding-top:36px}
       .grid{grid-template-columns:1fr}
       .timeline{grid-template-columns:1fr;}
-      /* phone ocupa más ancho en mobile para que se note */
       .phone{width:min(70%, 340px)}
     }
   </style>
@@ -171,9 +181,8 @@
         </div>
       </div>
 
-      <!-- NUEVO panel derecho: degradado + imagen con ilusión -->
+      <!-- Panel con degradado + imagen borrosa -->
       <div class="hero-right" aria-label="Vista previa estilo app de inversión">
-        <!-- Phone decorativo encima del fondo -->
         <div class="phone" role="img" aria-label="Vista previa de la app de Tokgol">
           <div class="ticker" aria-hidden="true">
             <div class="chip">Analytics en tiempo real</div>
