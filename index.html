@@ -162,4 +162,99 @@
       </div>
 
       <!-- Panel derecho: degradado + imagen (sin blur CSS y sin cuadro/phone) -->
-      <div class="hero-right" aria-label="Vista previa estilo app de
+      <div class="hero-right" aria-label="Vista previa estilo app de inversión"></div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="grid">
+        <div class="card">
+          <div class="eyebrow">Transparencia</div>
+          <h3>Tokenización responsable</h3>
+          <p class="muted">Estructuras claras orientadas a la protección del inversionista y del jugador, con procesos de cumplimiento integrados.</p>
+        </div>
+        <div class="card">
+          <div class="eyebrow">Tecnología</div>
+          <h3>Arquitectura preparada para escalar</h3>
+          <p class="muted">Infraestructura moderna, integraciones seguras y una experiencia simple para operar desde cualquier lugar.</p>
+        </div>
+        <div class="card">
+          <div class="eyebrow">Comunidad</div>
+          <h3>Alianzas y acceso</h3>
+          <p class="muted">Conectamos clubes, talentos y capital a través de una comunidad global con foco en LATAM.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="waitlist">
+      <div class="card" style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
+        <div style="display:flex; align-items:center; gap:10px"><span class="eyebrow">Únete</span><span class="muted">— Recibe avances del MVP</span></div>
+        <form action="https://formsubmit.co/el/fufahu" method="POST">
+          <input type="hidden" name="_subject" value="Nuevo registro a la waitlist de Tokgol" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value="/thanks.html" />
+          <label for="email" class="visually-hidden">Correo</label>
+          <input id="email" name="email" type="email" placeholder="tu@email.com" required>
+          <button class="btn primary" type="submit">Anotarme</button>
+        </form>
+        <small class="muted">Prometemos no hacer spam. Podrás desuscribirte cuando quieras.</small>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap">
+      <div class="timeline">
+        <div class="step">
+          <div><span class="dot"></span><strong>Q3 2025</strong></div>
+          <div class="muted">Definición de MVP, diseño de experiencia y arquitectura inicial.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q4 2025</strong></div>
+          <div class="muted">Desarrollo del MVP y validaciones con primeros usuarios.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q1 2026</strong></div>
+          <div class="muted">Pilotos controlados con clubes y agentes aliados.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q2 2026</strong></div>
+          <div class="muted">Lanzamiento progresivo y expansión por mercados prioritarios.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="brand" style="gap:10px">
+        <div class="logo" aria-hidden="true"></div>
+        <strong>TOKGOL</strong>
+      </div>
+      <div class="contact">
+        <span>Contacto:</span>
+        <a href="tel:+595981524777">Teléfono: +595 981 524 777</a>
+        <span>·</span>
+        <a href="mailto:ml@seller.consulting">ml@seller.consulting</a>
+      </div>
+      <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados. — Sitio en desarrollo.</small>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // apariciones suaves
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.animate([
+            {opacity:0, transform:'translateY(14px)'},
+            {opacity:1, transform:'translateY(0)'}
+          ], {duration:600, easing:'cubic-bezier(.22,.61,.36,1)', fill:'forwards'});
+          observer.unobserve(e.target);
+        }
+      })
+    }, {threshold:.1});
+    document.querySelectorAll('.card, .step, .hero > div:first-child').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>
