@@ -61,14 +61,14 @@
     .btn.ghost{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.02)}
     .btn.ghost:hover{background:rgba(255,255,255,.05)}
 
-    /* Panel visual con degradado + imagen borrosa */
+    /* Panel visual con degradado + IMAGEN (sin blur en CSS) */
     .hero-right{
       position:relative;
       min-height: clamp(260px, 36vw, 520px);
       border-radius: 18px;
       overflow:hidden;
       background-color:#0c0c0f; /* respaldo */
-      /* Capas base: destello + degradados + imagen difusa (debajo via ::before) */
+      /* Capas base: destello + degradado */
       background-image:
         radial-gradient(120% 120% at 100% 0%, rgba(22,163,74,0.22) 0%, rgba(10,10,12,0.0) 45%),
         linear-gradient(160deg, #0c0c12 0%, #0b1214 45%, #07160e 100%);
@@ -79,7 +79,7 @@
       border:1px solid rgba(255,255,255,.06);
       box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
     }
-    /* Imagen borrosa como capa inferior */
+    /* Imagen como capa inferior (ya viene borrosa en el asset) */
     .hero-right::before{
       content:"";
       position:absolute; inset:0; z-index:0;
@@ -90,8 +90,8 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      filter: blur(14px);
-      transform: scale(1.06); /* compensa recorte del blur */
+      /* sin filter: blur(); el asset ya es blur */
+      transform: scale(1.02);
     }
     /* “Vidrio” + grano sutil por encima */
     .hero-right::after{
@@ -106,27 +106,8 @@
       mix-blend-mode: overlay;
       pointer-events:none;
     }
-    /* Contenido dentro del panel siempre por encima */
+    /* Contenido dentro del panel por encima de las capas */
     .hero-right > *{ position:relative; z-index:2; }
-
-    /* Teléfono decorativo */
-    .phone{
-      position:absolute;
-      right: clamp(12px, 3vw, 24px);
-      bottom: clamp(12px, 3vw, 24px);
-      width: min(46%, 260px);
-      aspect-ratio:10/16; border-radius:32px;
-      background:linear-gradient(160deg, #14151a, #0f1014 60%, #0c0d10);
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03)
-    }
-    .phone:before{content:""; position:absolute; inset:1px; border-radius:31px; background:
-        radial-gradient(800px 400px at 80% -10%, rgba(212,175,55,.15), transparent 70%),
-        radial-gradient(600px 380px at 10% 110%, rgba(212,175,55,.10), transparent 70%),
-        linear-gradient(180deg, #0f1014, #0a0a0c);
-        border:1px solid rgba(255,255,255,.03)}
-    .ticker{position:absolute; left:10%; right:10%; bottom:28px; display:flex; gap:10px; overflow:hidden; mask-image:linear-gradient(to right, transparent, #000 12%, #000 88%, transparent)}
-    .chip{flex:0 0 auto; padding:8px 12px; border-radius:999px; border:1px solid rgba(212,175,55,.25); background:rgba(212,175,55,.06); color:var(--gold); font-weight:600; box-shadow:var(--glow)}
 
     /* ===== Secciones ===== */
     .section{padding:70px 0}
@@ -154,7 +135,6 @@
       .hero{grid-template-columns:1fr; padding-top:36px}
       .grid{grid-template-columns:1fr}
       .timeline{grid-template-columns:1fr;}
-      .phone{width:min(70%, 340px)}
     }
   </style>
 </head>
@@ -181,128 +161,5 @@
         </div>
       </div>
 
-      <!-- Panel con degradado + imagen borrosa -->
-      <div class="hero-right" aria-label="Vista previa estilo app de inversión">
-        <div class="phone" role="img" aria-label="Vista previa de la app de Tokgol">
-          <div class="ticker" aria-hidden="true">
-            <div class="chip">Analytics en tiempo real</div>
-            <div class="chip">Contratos digitales</div>
-            <div class="chip">KYC / AML</div>
-            <div class="chip">Custodia</div>
-            <div class="chip">Pagos globales</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="features">
-      <div class="grid">
-        <div class="card">
-          <div class="eyebrow">Transparencia</div>
-          <h3>Tokenización responsable</h3>
-          <p class="muted">Estructuras claras orientadas a la protección del inversionista y del jugador, con procesos de cumplimiento integrados.</p>
-        </div>
-        <div class="card">
-          <div class="eyebrow">Tecnología</div>
-          <h3>Arquitectura preparada para escalar</h3>
-          <p class="muted">Infraestructura moderna, integraciones seguras y una experiencia simple para operar desde cualquier lugar.</p>
-        </div>
-        <div class="card">
-          <div class="eyebrow">Comunidad</div>
-          <h3>Alianzas y acceso</h3>
-          <p class="muted">Conectamos clubes, talentos y capital a través de una comunidad global con foco en LATAM.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="waitlist">
-      <div class="card" style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
-        <div style="display:flex; align-items:center; gap:10px"><span class="eyebrow">Únete</span><span class="muted">— Recibe avances del MVP</span></div>
-        <form action="https://formsubmit.co/el/fufahu" method="POST">
-          <input type="hidden" name="_subject" value="Nuevo registro a la waitlist de Tokgol" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_next" value="/thanks.html" />
-          <label for="email" class="visually-hidden">Correo</label>
-          <input id="email" name="email" type="email" placeholder="tu@email.com" required>
-          <button class="btn primary" type="submit">Anotarme</button>
-        </form>
-        <small class="muted">Prometemos no hacer spam. Podrás desuscribirte cuando quieras.</small>
-      </div>
-    </section>
-
-    <section class="section" id="roadmap">
-      <div class="timeline">
-        <div class="step">
-          <div><span class="dot"></span><strong>Q3 2025</strong></div>
-          <div class="muted">Definición de MVP, diseño de experiencia y arquitectura inicial.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q4 2025</strong></div>
-          <div class="muted">Desarrollo del MVP y validaciones con primeros usuarios.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q1 2026</strong></div>
-          <div class="muted">Pilotos controlados con clubes y agentes aliados.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q2 2026</strong></div>
-          <div class="muted">Lanzamiento progresivo y expansión por mercados prioritarios.</div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap foot">
-      <div class="brand" style="gap:10px">
-        <div class="logo" aria-hidden="true"></div>
-        <strong>TOKGOL</strong>
-      </div>
-      <div class="contact">
-        <span>Contacto:</span>
-        <a href="tel:+595981524777">Teléfono: +595 981 524 777</a>
-        <span>·</span>
-        <a href="mailto:ml@seller.consulting">ml@seller.consulting</a>
-      </div>
-      <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados. — Sitio en desarrollo.</small>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // ticker anim
-    const ticker = document.querySelector('.ticker');
-    if(ticker){
-      let x = 0; const speed = 0.4;
-      function loop(){
-        x -= speed; ticker.style.transform = `translateX(${x}px)`;
-        if(Math.abs(x) > 160){
-          const first = ticker.firstElementChild; ticker.appendChild(first); x = 0;
-        }
-        requestAnimationFrame(loop);
-      } requestAnimationFrame(loop);
-    }
-
-    // apariciones suaves
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          e.target.animate([
-            {opacity:0, transform:'translateY(14px)'},
-            {opacity:1, transform:'translateY(0)'}
-          ], {duration:600, easing:'cubic-bezier(.22,.61,.36,1)', fill:'forwards'});
-          observer.unobserve(e.target);
-        }
-      })
-    }, {threshold:.1});
-    document.querySelectorAll('.card, .step, .hero > div:first-child').forEach(el=>observer.observe(el));
-
-    // util a11y
-    const style = document.createElement('style');
-    style.innerHTML = `.visually-hidden{position:absolute!important; width:1px!important; height:1px!important; padding:0!important; margin:-1px!important; overflow:hidden!important; clip:rect(0,0,0,0)!important; white-space:nowrap!important; border:0!important}`;
-    document.head.appendChild(style);
-  </script>
-</body>
-</html>
+      <!-- Panel derecho: degradado + imagen (sin blur CSS y sin cuadro/phone) -->
+      <div class="hero-right" aria-label="Vista previa estilo app de
