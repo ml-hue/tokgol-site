@@ -3,147 +3,180 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tokgol — Talento futbolístico tokenizado</title>
+  <title>TOKGOL — Invertí en goles, ganá con talento</title>
   <meta name="description" content="Tokgol está construyendo una plataforma para invertir en talento futbolístico. Sitio en desarrollo. Únete a la lista de espera." />
-  <meta property="og:title" content="Tokgol — Sitio en desarrollo" />
-  <meta property="og:description" content="Estamos construyendo una plataforma para invertir en talento futbolístico. Súmate a la lista de espera." />
+  <meta property="og:title" content="TOKGOL — Sitio en desarrollo" />
+  <meta property="og:description" content="Invertí en talento futbolístico con transparencia. Súmate a la lista de espera del MVP." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/og-image.jpg" />
+  <meta property="og:image" content="/assets/tokgol-logo-vertical.png" />
   <meta name="theme-color" content="#0b0b0c" />
 
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <!-- Favicon nuevo (SVG + PNG de respaldo si quisieras agregarlo) -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+
+  <!-- Tipografías (Sora para títulos, Inter para texto) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#0b0b0c;
-      --panel:#101114;
-      --soft:#1a1b20;
-      --text:#e8e8ea;
-      --muted:#a0a3ad;
-      --gold:#d4af37;
-      --gold-soft:#b5932e;
-      --glow: 0 0 40px rgba(212,175,55,.18);
-      --radius: 18px;
-      --ring: 1px solid rgba(212,175,55,.25);
+      /* Paleta Tokgol 2025 */
+      --bg:#0b0b0c;                 /* base oscuro */
+      --panel:#101114;              /* paneles */
+      --soft:#14161a;               /* tarjetas suaves */
+      --text:#f2f4f5;               /* texto principal */
+      --muted:#aab0b6;              /* texto secundario */
+      --ink:#0c0d10;                /* negro “tinta” */
+      --fluor:#A6FF4D;              /* verde fluorescente del slide */
+      --fluor-2:#7CF05A;            /* apoyo gradiente */
+      --fluor-glow:0 0 44px rgba(166,255,77,.28);
+      --ring:1px solid rgba(255,255,255,.06);
+      --radius:16px;
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
-      background: radial-gradient(1200px 800px at 80% -10%, rgba(212,175,55,.10), transparent 60%),
-                  radial-gradient(900px 700px at -10% 20%, rgba(212,175,55,.06), transparent 55%),
-                  var(--bg);
-      color:var(--text); line-height:1.5; letter-spacing:.2px;
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      color:var(--text); line-height:1.55; letter-spacing:.2px;
+      background:
+        /* textura zig-zag muy sutil como en el slide */
+        radial-gradient(80% 120% at 80% -10%, rgba(166,255,77,.18), transparent 60%),
+        linear-gradient(160deg, #0f1115 0%, #0c1110 40%, #0b120c 100%);
       overflow-x:hidden;
     }
+
     a{color:var(--text); text-decoration:none}
     .wrap{max-width:1200px; margin:0 auto; padding:32px 20px}
 
-    header{position:sticky; top:0; z-index:20; backdrop-filter:saturate(120%) blur(10px); background:linear-gradient(180deg, rgba(16,17,20,.85), rgba(16,17,20,.55) 60%, transparent); border-bottom:1px solid rgba(255,255,255,.06)}
+    /* ===== HEADER ===== */
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter:saturate(120%) blur(10px);
+      background:linear-gradient(180deg, rgba(16,17,20,.85), rgba(16,17,20,.55) 60%, transparent);
+      border-bottom:1px solid rgba(255,255,255,.06)
+    }
     .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
     .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.5px}
-    .logo{width:28px; height:28px; border-radius:8px; background: conic-gradient(from 210deg, rgba(212,175,55,.85), rgba(212,175,55,.25) 40%, rgba(212,175,55,.9) 70%, rgba(212,175,55,.5));
-          box-shadow: var(--glow), inset 0 0 12px rgba(212,175,55,.45); border:1px solid rgba(212,175,55,.4)}
-    .tag{font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.08); padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.02)}
+    .brand img{height:26px; display:block}
+    .tag{font-size:12px; color:var(--ink); border:1px solid rgba(0,0,0,.08);
+         padding:6px 10px; border-radius:999px; background:var(--fluor); font-weight:700}
 
     /* ===== HERO ===== */
-    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:36px; align-items:center; padding:70px 0 32px}
-    .kicker{display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(212,175,55,.25); color:var(--gold); background:rgba(212,175,55,.06);
-            border-radius:999px; padding:6px 12px; font-weight:600; box-shadow:var(--glow)}
-    .kicker .dot{width:8px; height:8px; border-radius:999px; background:var(--gold); box-shadow:0 0 14px rgba(212,175,55,.9)}
-    h1{font-size: clamp(36px, 5vw, 64px); line-height:1.05; margin:14px 0 12px; letter-spacing:.2px}
-    .hdesc{font-size: clamp(16px, 2.4vw, 18px); color:var(--muted); max-width:52ch}
+    .hero{display:grid; grid-template-columns:1.12fr .88fr; gap:36px; align-items:center; padding:64px 0 28px}
+    .kicker{display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(166,255,77,.35);
+            color:#0b0b0c; background:var(--fluor); border-radius:999px; padding:6px 12px;
+            font-weight:700; box-shadow:var(--fluor-glow)}
+    .kicker .dot{width:8px; height:8px; border-radius:999px; background:#0b0b0c}
+
+    h1{
+      font-family:Sora, Inter, ui-sans-serif; font-weight:800;
+      font-size: clamp(38px, 5.2vw, 68px); line-height:1.04; margin:16px 0 10px; letter-spacing:.1px
+    }
+    .accent{color:var(--fluor); text-shadow:0 6px 46px rgba(166,255,77,.28)}
+    .hdesc{font-size: clamp(16px, 2.4vw, 18px); color:var(--muted); max-width:60ch}
+
     .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
-    .btn{display:inline-flex; align-items:center; gap:10px; padding:14px 18px; border-radius:12px; font-weight:700; letter-spacing:.2px; transition:transform .1s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease}
-    .btn.primary{background:linear-gradient(180deg, rgba(212,175,55,.92), rgba(212,175,55,.82)); color:#0a0a0b; box-shadow:0 10px 22px rgba(212,175,55,.18)}
-    .btn.primary:hover{transform:translateY(-1px); box-shadow:0 16px 28px rgba(212,175,55,.24)}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:14px 18px; border-radius:12px; font-weight:800;
+      letter-spacing:.2px; transition:transform .1s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease
+    }
+    .btn.primary{background:linear-gradient(180deg, var(--fluor), var(--fluor-2)); color:#0a0a0b; box-shadow:0 10px 22px rgba(166,255,77,.22)}
+    .btn.primary:hover{transform:translateY(-1px); box-shadow:0 16px 28px rgba(166,255,77,.32)}
     .btn.ghost{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.02)}
     .btn.ghost:hover{background:rgba(255,255,255,.05)}
 
-    /* Panel visual con degradado + IMAGEN (sin blur en CSS) */
+    /* Panel visual (gradiente + imagen de apoyo sin blur CSS) */
     .hero-right{
       position:relative;
       min-height: clamp(260px, 36vw, 520px);
       border-radius: 18px;
       overflow:hidden;
-      background-color:#0c0c0f; /* respaldo */
-      /* Capas base: destello + degradado */
       background-image:
-        radial-gradient(120% 120% at 100% 0%, rgba(22,163,74,0.22) 0%, rgba(10,10,12,0.0) 45%),
-        linear-gradient(160deg, #0c0c12 0%, #0b1214 45%, #07160e 100%);
+        radial-gradient(120% 120% at 100% 0%, rgba(166,255,77,0.22) 0%, rgba(10,10,12,0.0) 45%),
+        linear-gradient(160deg, #0e1216 0%, #0b1112 45%, #07150e 100%);
       background-size: cover, cover;
       background-position: center, center;
       background-repeat:no-repeat;
-      background-blend-mode: screen, normal;
       border:1px solid rgba(255,255,255,.06);
       box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
     }
-    /* Imagen como capa inferior (ya viene borrosa en el asset) */
     .hero-right::before{
       content:"";
       position:absolute; inset:0; z-index:0;
-      background-image: image-set(
-        url("./assets/hero-app-blur.webp") type("image/webp") 1x,
-        url("./assets/hero-app-blur.jpg")  type("image/jpeg") 1x
-      );
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      /* sin filter: blur(); el asset ya es blur */
+      /* Si tenés una imagen del slide con monedas, ponela en /assets/hero-coins.jpg  */
+      background-image:
+        image-set(
+          url("/assets/hero-coins.jpg") type("image/jpeg") 1x
+        );
+      background-size: cover; background-position:center; background-repeat:no-repeat;
       transform: scale(1.02);
+      opacity:.75;
+      filter:saturate(115%) contrast(105%);
     }
-    /* “Vidrio” + grano sutil por encima */
     .hero-right::after{
       content:"";
       position:absolute; inset:0; z-index:1;
       background:
         radial-gradient(80% 60% at 80% 20%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 60%),
-        linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.35) 100%),
-        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 0 0.08 0.12 0.16 0.2 0.24 0.28 0.32 0.36 0.4 0.44 0.48 0.52 0.56 0.6 0.64 0.68 0.72 0.76 0.8 0.84 0.88 0.92 0.96 1'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-      background-size: cover, cover, 280px 280px;
-      background-repeat: no-repeat, no-repeat, repeat;
+        linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.35) 100%);
+      background-size: cover, cover;
       mix-blend-mode: overlay;
       pointer-events:none;
     }
-    /* Contenido dentro del panel por encima de las capas */
     .hero-right > *{ position:relative; z-index:2; }
 
     /* ===== Secciones ===== */
-    .section{padding:70px 0}
+    .section{padding:64px 0}
     .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px}
-    .card{border-radius:var(--radius); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); border:1px solid rgba(255,255,255,.06); padding:24px; position:relative}
-    .card:after{content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; box-shadow:var(--glow)}
-    .card h3{margin:6px 0 6px}
-    .eyebrow{font-size:12px; letter-spacing:.35px; color:var(--gold); font-weight:700}
+    .card{
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.06); padding:24px; position:relative
+    }
+    .card:after{content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; box-shadow:var(--fluor-glow)}
+    .card h3{margin:6px 0 6px; font-family:Sora, Inter, ui-sans-serif}
+    .eyebrow{font-size:12px; letter-spacing:.35px; color:var(--fluor); font-weight:800; text-transform:uppercase}
     .muted{color:var(--muted)}
 
     .timeline{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
     .step{padding:20px; background:var(--soft); border-radius:14px; border:1px solid rgba(255,255,255,.06)}
-    .step .dot{width:10px; height:10px; border-radius:999px; background:var(--gold); display:inline-block; box-shadow:0 0 12px rgba(212,175,55,.9); margin-right:8px}
+    .step .dot{width:10px; height:10px; border-radius:999px; background:var(--fluor); display:inline-block; box-shadow:0 0 14px rgba(166,255,77,.9); margin-right:8px}
 
-    footer{border-top:1px solid rgba(255,255,255,.06); background:linear-gradient(180deg, rgba(16,17,20,.4), rgba(16,17,20,.9)); padding:36px 0 60px}
-    .foot{display:flex; flex-direction:column; gap:12px; color:var(--muted)}
-    .contact{display:flex; gap:20px; flex-wrap:wrap}
-    .contact a{color:var(--text)}
+    /* ===== FOOTER ===== */
+    footer{
+      border-top:1px solid rgba(255,255,255,.06);
+      background:linear-gradient(180deg, rgba(16,17,20,.4), rgba(16,17,20,.9));
+      padding:36px 0 60px
+    }
+    .foot{display:flex; flex-direction:column; gap:14px; color:var(--muted)}
+    .foot .brand{gap:12px}
+    .foot .brand img{height:22px}
 
+    /* Formularios */
     form{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    input[type=email]{background:#0d0e12; border:1px solid rgba(255,255,255,.1); color:var(--text); padding:14px 14px; border-radius:12px; min-width:260px; outline:none}
-    input[type=email]:focus{border-color:rgba(212,175,55,.45); box-shadow:0 0 0 4px rgba(212,175,55,.12)}
+    input[type=email]{
+      background:#0d0e12; border:1px solid rgba(255,255,255,.1); color:var(--text);
+      padding:14px 14px; border-radius:12px; min-width:260px; outline:none
+    }
+    input[type=email]:focus{border-color:rgba(166,255,77,.55); box-shadow:0 0 0 4px rgba(166,255,77,.16)}
 
+    /* Responsive */
     @media (max-width: 960px){
       .hero{grid-template-columns:1fr; padding-top:36px}
       .grid{grid-template-columns:1fr}
       .timeline{grid-template-columns:1fr;}
+      .foot .brand{flex-direction:row}
     }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <span>TOKGOL</span>
+      <div class="brand" aria-label="Tokgol">
+        <img src="/assets/tokgol-logo-horizontal.png" alt="TOKGOL" width="180" height="26" />
       </div>
       <div class="tag">Sitio en desarrollo</div>
     </div>
@@ -153,16 +186,19 @@
     <section class="hero">
       <div>
         <span class="kicker"><span class="dot"></span> Próximamente</span>
-        <h1>Invierte en <span style="color:var(--gold); text-shadow:0 4px 40px rgba(212,175,55,.18)">talento futbolístico</span> con transparencia.</h1>
-        <p class="hdesc">Estamos construyendo una plataforma para conectar a inversionistas con carreras de futbolistas prometedores, con trazabilidad y experiencia de clase mundial. Únete para recibir las novedades del MVP.</p>
+        <h1>Invertí en <span class="accent">talento futbolístico</span> con transparencia.</h1>
+        <p class="hdesc">
+          Estamos construyendo una plataforma para conectar a inversores con carreras de futbolistas prometedores,
+          con trazabilidad y una experiencia de clase mundial. Únite para recibir las novedades del MVP.
+        </p>
         <div class="cta">
           <a class="btn primary" href="#waitlist">Unirme a la lista de espera</a>
           <a class="btn ghost" href="#roadmap">Ver hoja de ruta</a>
         </div>
       </div>
 
-      <!-- Panel derecho: degradado + imagen (sin blur CSS y sin cuadro/phone) -->
-      <div class="hero-right" aria-label="Vista previa estilo app de inversión"></div>
+      <!-- Panel derecho: gradiente + imagen del slide (opcional). Sin blur en CSS -->
+      <div class="hero-right" aria-label="Vista previa estilo Tokgol"></div>
     </section>
 
     <section class="section" id="features">
@@ -170,12 +206,12 @@
         <div class="card">
           <div class="eyebrow">Transparencia</div>
           <h3>Tokenización responsable</h3>
-          <p class="muted">Estructuras claras orientadas a la protección del inversionista y del jugador, con procesos de cumplimiento integrados.</p>
+          <p class="muted">Estructuras claras orientadas a la protección del inversor y del jugador, con procesos de cumplimiento integrados.</p>
         </div>
         <div class="card">
           <div class="eyebrow">Tecnología</div>
           <h3>Arquitectura preparada para escalar</h3>
-          <p class="muted">Infraestructura moderna, integraciones seguras y una experiencia simple para operar desde cualquier lugar.</p>
+          <p class="muted">Infra moderna, integraciones seguras y una experiencia simple para operar desde cualquier lugar.</p>
         </div>
         <div class="card">
           <div class="eyebrow">Comunidad</div>
@@ -187,7 +223,9 @@
 
     <section class="section" id="waitlist">
       <div class="card" style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
-        <div style="display:flex; align-items:center; gap:10px"><span class="eyebrow">Únete</span><span class="muted">— Recibe avances del MVP</span></div>
+        <div style="display:flex; align-items:center; gap:10px">
+          <span class="eyebrow">Únite</span><span class="muted">— Recibí avances del MVP</span>
+        </div>
         <form action="https://formsubmit.co/el/fufahu" method="POST">
           <input type="hidden" name="_subject" value="Nuevo registro a la waitlist de Tokgol" />
           <input type="hidden" name="_template" value="table" />
@@ -225,9 +263,8 @@
 
   <footer>
     <div class="wrap foot">
-      <div class="brand" style="gap:10px">
-        <div class="logo" aria-hidden="true"></div>
-        <strong>TOKGOL</strong>
+      <div class="brand">
+        <img src="/assets/tokgol-logo-horizontal.png" alt="TOKGOL" width="160" height="22" />
       </div>
       <div class="contact">
         <span>Contacto:</span>
