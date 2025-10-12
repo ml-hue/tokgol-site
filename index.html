@@ -10,11 +10,15 @@
   <meta property="og:type" content="website" />
   <meta property="og:image" content="/assets/tokgol-logo-vertical.png" />
   <meta name="theme-color" content="#0b0b0c" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TOKGOL — Invertí en goles, ganá con talento" />
+  <meta name="twitter:description" content="Estamos construyendo la plataforma para invertir en talento futbolístico." />
+  <meta name="twitter:image" content="/assets/tokgol-logo-vertical.png" />
 
-  <!-- Favicon nuevo (SVG + PNG de respaldo si quisieras agregarlo) -->
+  <!-- Favicon nuevo -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 
-  <!-- Tipografías (Sora para títulos, Inter para texto) -->
+  <!-- Tipografías: Sora (títulos), Inter (texto) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
 
@@ -40,10 +44,13 @@
       margin:0;
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
       color:var(--text); line-height:1.55; letter-spacing:.2px;
+      /* Fondo verde tipo slide (fluor) con destellos y una textura sutil en zig-zag */
       background:
-        /* textura zig-zag muy sutil como en el slide */
-        radial-gradient(80% 120% at 80% -10%, rgba(166,255,77,.18), transparent 60%),
-        linear-gradient(160deg, #0f1115 0%, #0c1110 40%, #0b120c 100%);
+        radial-gradient(120% 120% at 110% -10%, rgba(166,255,77,.35) 0%, rgba(166,255,77,0) 55%),
+        radial-gradient(80% 110% at -10% 30%, rgba(124,240,90,.28) 0%, rgba(124,240,90,0) 60%),
+        linear-gradient(160deg, #B8FF60 0%, #9BFF5B 35%, #84F35A 65%, #6DE55A 100%),
+        repeating-linear-gradient(135deg, rgba(0,0,0,.05) 0 10px, rgba(0,0,0,0) 10px 22px);
+      background-blend-mode: screen, screen, normal, overlay;
       overflow-x:hidden;
     }
 
@@ -186,7 +193,7 @@
     <section class="hero">
       <div>
         <span class="kicker"><span class="dot"></span> Próximamente</span>
-        <h1>Invertí en <span class="accent">talento futbolístico</span> con transparencia.</h1>
+        <h1>Invertí en <span class="accent">goles</span>, ganá con talento.</h1>
         <p class="hdesc">
           Estamos construyendo una plataforma para conectar a inversores con carreras de futbolistas prometedores,
           con trazabilidad y una experiencia de clase mundial. Únite para recibir las novedades del MVP.
@@ -270,7 +277,7 @@
         <span>Contacto:</span>
         <a href="tel:+595981524777">Teléfono: +595 981 524 777</a>
         <span>·</span>
-        <a href="mailto:ml@seller.consulting">ml@seller.consulting</a>
+        <a href="mailto:ml@tokgol.com">ml@tokgol.com</a>
       </div>
       <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados. — Sitio en desarrollo.</small>
     </div>
