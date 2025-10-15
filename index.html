@@ -4,37 +4,40 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TOKGOL — Invertí en goles, ganá con talento</title>
-  <meta name="description" content="Tokgol está construyendo una plataforma para invertir en talento futbolístico. Sitio en desarrollo. Únete a la lista de espera." />
-  <meta property="og:title" content="TOKGOL — Sitio en desarrollo" />
-  <meta property="og:description" content="Invertí en talento futbolístico con transparencia. Súmate a la lista de espera del MVP." />
+  <meta name="description" content="Tokgol está construyendo una plataforma para invertir en talento futbolístico. Únete a la lista de espera del MVP." />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="TOKGOL — Invertí en goles, ganá con talento" />
+  <meta property="og:description" content="Conectamos inversores con talento futbolístico, con transparencia y trazabilidad." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="/assets/tokgol-logo-vertical.png" />
-  <meta name="theme-color" content="#A6FF4D" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="TOKGOL — Invertí en goles, ganá con talento" />
-  <meta name="twitter:description" content="Estamos construyendo la plataforma para invertir en talento futbolístico." />
+  <meta name="twitter:description" content="Conectamos inversores con talento futbolístico, con transparencia y trazabilidad." />
   <meta name="twitter:image" content="/assets/tokgol-logo-vertical.png" />
+  <meta name="theme-color" content="#A6FF4D" />
 
+  <!-- Favicon -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 
-  <!-- Tipografías: Sora (títulos), Inter (texto) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      /* Paleta Tokgol 2025 */
+      /* Paleta Tokgol */
       --bg:#0b0b0c;
       --panel:#101114;
       --soft:#14161a;
       --text:#f2f4f5;
       --muted:#aab0b6;
       --ink:#0c0d10;
-      --fluor:#A6FF4D;     /* verde fluorescente */
-      --fluor-2:#7CF05A;   /* apoyo gradiente */
-      --fluor-glow:0 0 44px rgba(166,255,77,.28);
+      --fluor:#A6FF4D;
+      --fluor-2:#7CF05A;
       --ring:1px solid rgba(255,255,255,.06);
       --radius:16px;
+      --shadow:0 20px 80px rgba(0,0,0,.55);
     }
 
     *{box-sizing:border-box}
@@ -43,7 +46,6 @@
       margin:0;
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
       color:var(--text); line-height:1.55; letter-spacing:.2px;
-      /* Fondo verde tipo slide (fluor) */
       background:
         radial-gradient(120% 120% at 110% -10%, rgba(166,255,77,.35) 0%, rgba(166,255,77,0) 55%),
         radial-gradient(80% 110% at -10% 30%, rgba(124,240,90,.28) 0%, rgba(124,240,90,0) 60%),
@@ -54,44 +56,52 @@
     }
 
     a{color:var(--text); text-decoration:none}
-    .wrap{max-width:1200px; margin:0 auto; padding:32px 20px}
+    .wrap{max-width:1200px; margin:0 auto; padding:28px 20px}
 
     /* ===== HEADER ===== */
     header{
       position:sticky; top:0; z-index:20;
       backdrop-filter:saturate(120%) blur(10px);
       background:linear-gradient(180deg, rgba(16,17,20,.85), rgba(16,17,20,.55) 60%, transparent);
-      border-bottom:1px solid rgba(255,255,255,.06);
-      margin-bottom:-40px; /* compensa el logo grande */
+      border-bottom:1px solid rgba(255,255,255,.06)
     }
     .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
     .brand{display:flex; align-items:center; gap:12px}
+    /* Logo grande, sin fondo y responsivo */
     .brand img{
-      height:180px;                /* ~3x más grande */
-      max-height:22vh;
-      display:block;
-      margin:6px 0;
-      filter:brightness(1.15) contrast(1.05);
+      height:180px; max-height:22vh; display:block;
+      margin:8px 0; filter:brightness(1.15) contrast(1.08);
       transition:transform .25s ease, filter .25s ease;
     }
-    .brand img:hover{ transform:scale(1.05); filter:brightness(1.25) contrast(1.1) }
+    .brand img:hover{ transform:scale(1.03); filter:brightness(1.25) contrast(1.12) }
     .tag{
       font-size:12px; color:var(--ink); border:1px solid rgba(0,0,0,.08);
       padding:6px 10px; border-radius:999px; background:var(--fluor); font-weight:700
     }
 
     /* ===== HERO ===== */
-    .hero{display:grid; grid-template-columns:1.12fr .88fr; gap:36px; align-items:center; padding:64px 0 28px}
-    .kicker{display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(166,255,77,.35);
-            color:#0b0b0c; background:var(--fluor); border-radius:999px; padding:6px 12px;
-            font-weight:700; box-shadow:var(--fluor-glow)}
+    .hero{
+      display:grid; grid-template-columns:1.12fr .88fr; gap:36px; align-items:center; padding:58px 0 26px
+    }
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid rgba(166,255,77,.35); color:#0b0b0c; background:var(--fluor);
+      border-radius:999px; padding:6px 12px; font-weight:700;
+      box-shadow:0 0 44px rgba(166,255,77,.28)
+    }
     .kicker .dot{width:8px; height:8px; border-radius:999px; background:#0b0b0c}
 
     h1{
       font-family:Sora, Inter, ui-sans-serif; font-weight:800;
       font-size: clamp(38px, 5.2vw, 68px); line-height:1.04; margin:16px 0 10px; letter-spacing:.1px
     }
-    .accent{color:var(--fluor); text-shadow:0 6px 46px rgba(166,255,77,.28)}
+    /* Mejor contraste para “goles” */
+    .accent{
+      color:#d9ff8b;
+      text-shadow:
+        0 0 10px rgba(0,0,0,.25),
+        0 6px 36px rgba(166,255,77,.45);
+    }
     .hdesc{font-size: clamp(16px, 2.4vw, 18px); color:var(--muted); max-width:60ch}
 
     .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
@@ -105,7 +115,7 @@
     .btn.ghost{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.02)}
     .btn.ghost:hover{background:rgba(255,255,255,.05)}
 
-    /* Panel visual (gradiente + imagen de apoyo) */
+    /* Panel visual (gradiente + imagen blur con fade-in) */
     .hero-right{
       position:relative;
       min-height: clamp(260px, 36vw, 520px);
@@ -114,23 +124,35 @@
       background-image:
         radial-gradient(120% 120% at 100% 0%, rgba(166,255,77,0.22) 0%, rgba(10,10,12,0.0) 45%),
         linear-gradient(160deg, #0e1216 0%, #0b1112 45%, #07150e 100%);
-      background-size: cover, cover;
-      background-position: center, center;
-      background-repeat:no-repeat;
+      background-size: cover, cover; background-position: center, center; background-repeat:no-repeat;
       border:1px solid rgba(255,255,255,.06);
-      box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
+      box-shadow:var(--shadow), inset 0 0 0 1px rgba(255,255,255,.03);
     }
     .hero-right::before{
       content:""; position:absolute; inset:0; z-index:0;
-      background-image:image-set(
+      background-image: image-set(
         url("/assets/hero-app-blur.webp") type("image/webp") 1x,
         url("/assets/hero-app-blur.jpg")  type("image/jpeg") 1x
       );
-      background-size:cover; background-position:center; background-repeat:no-repeat;
-      transform:scale(1.02); opacity:.85; filter:saturate(110%) contrast(105%);
-      animation:fadeIn .8s ease both .15s;
+      background-size: cover; background-position:center; background-repeat:no-repeat;
+      opacity:0; transform:scale(1.02);
+      filter:saturate(110%) contrast(105%);
+      animation: heroFade .8s ease forwards .1s;
     }
-    @keyframes fadeIn{from{opacity:0; transform:scale(1.02) translateY(6px)} to{opacity:.85; transform:scale(1.02) translateY(0)}}
+    .hero-right::after{
+      content:""; position:absolute; inset:0; z-index:1;
+      background:
+        radial-gradient(80% 60% at 80% 20%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 60%),
+        linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.35) 100%);
+      mix-blend-mode: overlay; pointer-events:none;
+    }
+    @keyframes heroFade{
+      from{opacity:0; transform:scale(1.02)}
+      to  {opacity:.92; transform:scale(1.00)}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .hero-right::before{animation:none; opacity:.92}
+    }
 
     /* ===== Secciones ===== */
     .section{padding:64px 0}
@@ -140,7 +162,7 @@
       background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
       border:1px solid rgba(255,255,255,.06); padding:24px; position:relative
     }
-    .card:after{content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; box-shadow:var(--fluor-glow)}
+    .card:after{content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; box-shadow:0 0 44px rgba(166,255,77,.18)}
     .card h3{margin:6px 0 6px; font-family:Sora, Inter, ui-sans-serif}
     .eyebrow{font-size:12px; letter-spacing:.35px; color:var(--fluor); font-weight:800; text-transform:uppercase}
     .muted{color:var(--muted)}
@@ -149,41 +171,38 @@
     .step{padding:20px; background:var(--soft); border-radius:14px; border:1px solid rgba(255,255,255,.06)}
     .step .dot{width:10px; height:10px; border-radius:999px; background:var(--fluor); display:inline-block; box-shadow:0 0 14px rgba(166,255,77,.9); margin-right:8px}
 
-    /* ===== FOOTER: ahora en verde fluor ===== */
-    footer{
-      border-top:1px solid rgba(255,255,255,.06);
-      background:linear-gradient(180deg, var(--fluor), var(--fluor-2));
-      color:#0b0b0c;          /* texto oscuro para contraste */
-      padding:36px 0 60px
-    }
-    .foot{display:flex; flex-direction:column; gap:14px}
-    .foot a{color:#0b0b0c}
-    .foot .brand{gap:12px}
-    .foot .brand img{height:26px; filter:brightness(.1)} /* mantiene el logo oscuro sobre fondo claro */
-
-    /* Formularios */
+    /* Waitlist form */
     form{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
     input[type=email]{
       background:#0d0e12; border:1px solid rgba(255,255,255,.1); color:var(--text);
       padding:14px 14px; border-radius:12px; min-width:260px; outline:none
     }
+    input[type=email]::placeholder{color:#97a0a8}
     input[type=email]:focus{border-color:rgba(166,255,77,.55); box-shadow:0 0 0 4px rgba(166,255,77,.16)}
 
-    /* Responsive */
-    @media (max-width:1200px){
-      .brand img{height:140px}
+    /* ===== FOOTER (verde para consistencia) ===== */
+    footer{
+      border-top:1px solid rgba(255,255,255,.06);
+      background:linear-gradient(180deg, rgba(16,17,20,.25), rgba(16,17,20,.55)),
+                 linear-gradient(160deg, #B8FF60 0%, #84F35A 65%, #6DE55A 100%);
+      padding:36px 0 60px
     }
+    .foot{display:flex; flex-direction:column; gap:14px; color:var(--muted)}
+    .foot .brand{gap:12px}
+    .foot .brand img{height:140px; display:block; filter:brightness(1.15) contrast(1.08)}
+
+    /* Responsive */
+    @media (max-width: 1040px){ .brand img{height:150px} }
     @media (max-width: 960px){
-      .brand img{height:110px}
-      header{margin-bottom:-24px}
-      .hero{grid-template-columns:1fr; padding-top:36px}
+      .hero{grid-template-columns:1fr; padding-top:28px}
       .grid{grid-template-columns:1fr}
       .timeline{grid-template-columns:1fr;}
       .foot .brand{flex-direction:row}
+      .brand img{height:120px}
     }
-    @media (max-width:640px){
-      .brand img{height:72px}
-      header{margin-bottom:-12px}
+    @media (max-width: 560px){
+      .brand img{height:100px}
+      .tag{display:none}
     }
   </style>
 </head>
@@ -191,7 +210,8 @@
   <header>
     <div class="wrap nav">
       <div class="brand" aria-label="Tokgol">
-        <img src="/assets/tokgol-logo-horizontal.png" alt="TOKGOL" width="560" height="180" />
+        <!-- Logo sin fondo (oscuro) -->
+        <img src="/assets/tokgol-logo-dark.png" alt="TOKGOL" width="560" height="180" />
       </div>
       <div class="tag">Sitio en desarrollo</div>
     </div>
@@ -209,9 +229,11 @@
         <div class="cta">
           <a class="btn primary" href="#waitlist">Unirme a la lista de espera</a>
           <a class="btn ghost" href="#roadmap">Ver hoja de ruta</a>
+          <a class="btn ghost" href="mailto:ml@tokgol.com">Contacto</a>
         </div>
       </div>
 
+      <!-- Panel derecho: gradiente + imagen blur con fade-in -->
       <div class="hero-right" aria-label="Vista previa estilo Tokgol"></div>
     </section>
 
@@ -277,8 +299,8 @@
 
   <footer>
     <div class="wrap foot">
-      <div class="brand">
-        <img src="/assets/tokgol-logo-horizontal.png" alt="TOKGOL" width="220" height="26" />
+      <div class="brand" aria-label="Tokgol">
+        <img src="/assets/tokgol-logo-dark.png" alt="TOKGOL" width="420" height="140" />
       </div>
       <div class="contact">
         <span>Contacto:</span>
@@ -286,25 +308,26 @@
         <span>·</span>
         <a href="mailto:ml@tokgol.com">ml@tokgol.com</a>
       </div>
-      <small>© <span id="year"></span> Tokgol. Todos los derechos reservados. — Sitio en desarrollo.</small>
+      <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados. — Sitio en desarrollo.</small>
     </div>
   </footer>
 
   <script>
+    // Año en footer
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Apariciones suaves
     const observer = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
-          e.target.animate([
-            {opacity:0, transform:'translateY(14px)'},
-            {opacity:1, transform:'translateY(0)'}
-          ], {duration:600, easing:'cubic-bezier(.22,.61,.36,1)', fill:'forwards'});
+          e.target.animate(
+            [{opacity:0, transform:'translateY(14px)'},{opacity:1, transform:'translateY(0)'}],
+            {duration:600, easing:'cubic-bezier(.22,.61,.36,1)', fill:'forwards'}
+          );
           observer.unobserve(e.target);
         }
       })
-    }, {threshold:.1});
+    }, {threshold:.12});
     document.querySelectorAll('.card, .step, .hero > div:first-child').forEach(el=>observer.observe(el));
   </script>
 </body>
