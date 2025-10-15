@@ -95,45 +95,39 @@
     .btn.ghost{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.02)}
     .btn.ghost:hover{background:rgba(255,255,255,.05)}
 
-    /* Panel visual (gradiente + imagen de apoyo sin blur CSS) */
-    .hero-right{
-      position:relative;
-      min-height: clamp(260px, 36vw, 520px);
-      border-radius: 18px;
-      overflow:hidden;
-      background-image:
-        radial-gradient(120% 120% at 100% 0%, rgba(166,255,77,0.22) 0%, rgba(10,10,12,0.0) 45%),
-        linear-gradient(160deg, #0e1216 0%, #0b1112 45%, #07150e 100%);
-      background-size: cover, cover;
-      background-position: center, center;
-      background-repeat:no-repeat;
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
-    }
-    .hero-right::before{
-      content:"";
-      position:absolute; inset:0; z-index:0;
-      /* Si tenés una imagen del slide con monedas, ponela en /assets/hero-coins.jpg  */
-      background-image:
-        image-set(
-          url("/assets/hero-coins.jpg") type("image/jpeg") 1x
-        );
-      background-size: cover; background-position:center; background-repeat:no-repeat;
-      transform: scale(1.02);
-      opacity:.75;
-      filter:saturate(115%) contrast(105%);
-    }
-    .hero-right::after{
-      content:"";
-      position:absolute; inset:0; z-index:1;
-      background:
-        radial-gradient(80% 60% at 80% 20%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 60%),
-        linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.35) 100%);
-      background-size: cover, cover;
-      mix-blend-mode: overlay;
-      pointer-events:none;
-    }
-    .hero-right > *{ position:relative; z-index:2; }
+   /* Panel visual (gradiente + imagen de apoyo sin blur CSS) */
+.hero-right{
+  position:relative;
+  min-height: clamp(260px, 36vw, 520px);
+  border-radius: 18px;
+  overflow:hidden;
+  background-image:
+    radial-gradient(120% 120% at 100% 0%, rgba(166,255,77,0.22) 0%, rgba(10,10,12,0.0) 45%),
+    linear-gradient(160deg, #0e1216 0%, #0b1112 45%, #07150e 100%);
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat:no-repeat;
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
+}
+
+.hero-right::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  /* Imagen real Tokgol hero */
+  background-image: image-set(
+    url("/assets/hero-app-blur.webp") type("image/webp") 1x,
+    url("/assets/hero-app-blur.jpg") type("image/jpeg") 1x
+  );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.02);
+  opacity: .85;
+  filter: saturate(110%) contrast(105%);
+}
 
     /* ===== Secciones ===== */
     .section{padding:64px 0}
@@ -183,7 +177,7 @@
   <header>
     <div class="wrap nav">
       <div class="brand" aria-label="Tokgol">
-        <img src="/assets/tokgol-logo-horizontal.png" alt="TOKGOL" width="180" height="26" />
+        <<img src="/assets/tokgol-logo-icon.png" alt="TOKGOL" width="160" height="26" />
       </div>
       <div class="tag">Sitio en desarrollo</div>
     </div>
@@ -271,7 +265,7 @@
   <footer>
     <div class="wrap foot">
       <div class="brand">
-        <img src="/assets/tokgol-logo-horizontal.png" alt="TOKGOL" width="160" height="22" />
+        <img src="/assets/tokgol-logo-icon.png" alt="TOKGOL" width="140" height="22" />
       </div>
       <div class="contact">
         <span>Contacto:</span>
