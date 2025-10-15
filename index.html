@@ -4,197 +4,203 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TOKGOL — Invertí en goles, ganá con talento</title>
-  <meta name="description" content="Tokgol está construyendo una plataforma para invertir en talento futbolístico. Únete a la lista de espera del MVP." />
-
-  <!-- Meta OG -->
-  <meta property="og:title" content="TOKGOL — Invertí en goles, ganá con talento" />
+  <meta name="description" content="Tokgol está construyendo una plataforma para invertir en talento futbolístico. Sitio en desarrollo. Únete a la lista de espera." />
+  <meta property="og:title" content="TOKGOL — Sitio en desarrollo" />
   <meta property="og:description" content="Invertí en talento futbolístico con transparencia. Súmate a la lista de espera del MVP." />
-  <meta property="og:image" content="assets/tokgol-logo-dark.png" />
-  <meta name="theme-color" content="#0b0b0c" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/assets/tokgol-logo-vertical.png" />
+  <meta name="theme-color" content="#A6FF4D" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TOKGOL — Invertí en goles, ganá con talento" />
+  <meta name="twitter:description" content="Estamos construyendo la plataforma para invertir en talento futbolístico." />
+  <meta name="twitter:image" content="/assets/tokgol-logo-vertical.png" />
 
-  <!-- Favicon -->
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@700;800&display=swap" rel="stylesheet" />
+  <!-- Tipografías: Sora (títulos), Inter (texto) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
+    :root{
+      /* Paleta Tokgol 2025 */
+      --bg:#0b0b0c;
+      --panel:#101114;
+      --soft:#14161a;
       --text:#f2f4f5;
       --muted:#aab0b6;
-      --fluor:#A6FF4D;
-      --fluor-2:#7CF05A;
+      --ink:#0c0d10;
+      --fluor:#A6FF4D;     /* verde fluorescente */
+      --fluor-2:#7CF05A;   /* apoyo gradiente */
       --fluor-glow:0 0 44px rgba(166,255,77,.28);
-      --card:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      --ring:1px solid rgba(255,255,255,.06);
+      --radius:16px;
     }
 
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin:0; color:var(--text); font-family:Inter,system-ui,sans-serif; line-height:1.55;
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      color:var(--text); line-height:1.55; letter-spacing:.2px;
+      /* Fondo verde tipo slide (fluor) */
       background:
         radial-gradient(120% 120% at 110% -10%, rgba(166,255,77,.35) 0%, rgba(166,255,77,0) 55%),
         radial-gradient(80% 110% at -10% 30%, rgba(124,240,90,.28) 0%, rgba(124,240,90,0) 60%),
-        linear-gradient(160deg,#B8FF60 0%,#9BFF5B 35%,#84F35A 65%,#6DE55A 100%),
+        linear-gradient(160deg, #B8FF60 0%, #9BFF5B 35%, #84F35A 65%, #6DE55A 100%),
         repeating-linear-gradient(135deg, rgba(0,0,0,.05) 0 10px, rgba(0,0,0,0) 10px 22px);
-      background-blend-mode:screen,screen,normal,overlay;
+      background-blend-mode: screen, screen, normal, overlay;
       overflow-x:hidden;
     }
 
     a{color:var(--text); text-decoration:none}
     .wrap{max-width:1200px; margin:0 auto; padding:32px 20px}
 
-    /* Header */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(10px);
-      background: rgba(0, 0, 0, .35);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      padding: 8px 0;
+    /* ===== HEADER ===== */
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter:saturate(120%) blur(10px);
+      background:linear-gradient(180deg, rgba(16,17,20,.85), rgba(16,17,20,.55) 60%, transparent);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      margin-bottom:-40px; /* compensa el logo grande */
     }
     .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .brand{display:flex; align-items:center; gap:12px}
     .brand img{
-      height:84px;
-      max-height:10vh;
+      height:180px;                /* ~3x más grande */
+      max-height:22vh;
       display:block;
-      margin:4px 0;
+      margin:6px 0;
       filter:brightness(1.15) contrast(1.05);
       transition:transform .25s ease, filter .25s ease;
     }
-    .brand img:hover{transform:scale(1.05); filter:brightness(1.25) contrast(1.1)}
-    .tag{font-size:12px; background:var(--fluor); color:#000; padding:6px 10px; border-radius:999px; font-weight:700}
+    .brand img:hover{ transform:scale(1.05); filter:brightness(1.25) contrast(1.1) }
+    .tag{
+      font-size:12px; color:var(--ink); border:1px solid rgba(0,0,0,.08);
+      padding:6px 10px; border-radius:999px; background:var(--fluor); font-weight:700
+    }
 
-    /* Hero */
-    .hero{
-      position:relative;
-      display:grid; grid-template-columns:1.12fr .88fr; gap:36px; align-items:center;
-      padding:64px 0;
-    }
+    /* ===== HERO ===== */
+    .hero{display:grid; grid-template-columns:1.12fr .88fr; gap:36px; align-items:center; padding:64px 0 28px}
+    .kicker{display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(166,255,77,.35);
+            color:#0b0b0c; background:var(--fluor); border-radius:999px; padding:6px 12px;
+            font-weight:700; box-shadow:var(--fluor-glow)}
+    .kicker .dot{width:8px; height:8px; border-radius:999px; background:#0b0b0c}
+
     h1{
-      font-family:Sora,Inter,sans-serif;
-      font-weight:800;
-      font-size:clamp(36px,5vw,68px);
-      line-height:1.05;
-      margin:16px 0 10px;
-      color:#fff;
-      text-shadow:0 2px 12px rgba(0,0,0,.22);
+      font-family:Sora, Inter, ui-sans-serif; font-weight:800;
+      font-size: clamp(38px, 5.2vw, 68px); line-height:1.04; margin:16px 0 10px; letter-spacing:.1px
     }
-    .accent{color:#CFFF74; text-shadow:0 4px 24px rgba(0,0,0,.35);}
-    .hdesc{color:var(--muted); max-width:60ch;}
+    .accent{color:var(--fluor); text-shadow:0 6px 46px rgba(166,255,77,.28)}
+    .hdesc{font-size: clamp(16px, 2.4vw, 18px); color:var(--muted); max-width:60ch}
 
     .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
     .btn{
-      padding:14px 18px;
-      border-radius:12px;
-      font-weight:700;
-      transition:all .2s ease;
-      display:inline-flex; align-items:center;
+      display:inline-flex; align-items:center; gap:10px;
+      padding:14px 18px; border-radius:12px; font-weight:800;
+      letter-spacing:.2px; transition:transform .1s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease
     }
-    .btn.primary{
-      background:linear-gradient(180deg,var(--fluor),var(--fluor-2));
-      color:#000;
-      box-shadow:0 10px 22px rgba(166,255,77,.22)
-    }
-    .btn.primary:hover{transform:translateY(-2px); box-shadow:0 16px 28px rgba(166,255,77,.34)}
-    .btn.ghost{border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.02)}
-    .btn.ghost:hover{background:rgba(255,255,255,.06)}
+    .btn.primary{background:linear-gradient(180deg, var(--fluor), var(--fluor-2)); color:#0a0a0b; box-shadow:0 10px 22px rgba(166,255,77,.22)}
+    .btn.primary:hover{transform:translateY(-1px); box-shadow:0 16px 28px rgba(166,255,77,.32)}
+    .btn.ghost{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.02)}
+    .btn.ghost:hover{background:rgba(255,255,255,.05)}
 
-    /* Hero panel */
+    /* Panel visual (gradiente + imagen de apoyo) */
     .hero-right{
       position:relative;
-      min-height:clamp(260px,36vw,520px);
-      border-radius:18px;
+      min-height: clamp(260px, 36vw, 520px);
+      border-radius: 18px;
       overflow:hidden;
-      background:linear-gradient(160deg,rgba(14,18,22,.8),rgba(7,21,14,.6));
+      background-image:
+        radial-gradient(120% 120% at 100% 0%, rgba(166,255,77,0.22) 0%, rgba(10,10,12,0.0) 45%),
+        linear-gradient(160deg, #0e1216 0%, #0b1112 45%, #07150e 100%);
+      background-size: cover, cover;
+      background-position: center, center;
+      background-repeat:no-repeat;
       border:1px solid rgba(255,255,255,.06);
       box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
     }
     .hero-right::before{
-      content:"";
-      position:absolute; inset:0;
+      content:""; position:absolute; inset:0; z-index:0;
       background-image:image-set(
-        url("assets/hero-app-blur.webp") type("image/webp") 1x,
-        url("assets/hero-app-blur.jpg") type("image/jpeg") 1x
+        url("/assets/hero-app-blur.webp") type("image/webp") 1x,
+        url("/assets/hero-app-blur.jpg")  type("image/jpeg") 1x
       );
-      background-size:cover;
-      background-position:center;
-      opacity:0;
-      filter:brightness(1.1) saturate(120%);
-      animation:fadeInHero 1.4s ease-in-out forwards;
+      background-size:cover; background-position:center; background-repeat:no-repeat;
+      transform:scale(1.02); opacity:.85; filter:saturate(110%) contrast(105%);
+      animation:fadeIn .8s ease both .15s;
     }
-    @keyframes fadeInHero{
-      from{opacity:0; transform:scale(1.03);}
-      to{opacity:.9; transform:scale(1.02);}
-    }
+    @keyframes fadeIn{from{opacity:0; transform:scale(1.02) translateY(6px)} to{opacity:.85; transform:scale(1.02) translateY(0)}}
 
-    /* Sections */
+    /* ===== Secciones ===== */
     .section{padding:64px 0}
-    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
-    .card{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:24px; position:relative; box-shadow:var(--fluor-glow)}
-    .card h3{margin:6px 0 6px; font-family:Sora,Inter,sans-serif}
+    .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px}
+    .card{
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.06); padding:24px; position:relative
+    }
+    .card:after{content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; box-shadow:var(--fluor-glow)}
+    .card h3{margin:6px 0 6px; font-family:Sora, Inter, ui-sans-serif}
     .eyebrow{font-size:12px; letter-spacing:.35px; color:var(--fluor); font-weight:800; text-transform:uppercase}
     .muted{color:var(--muted)}
 
     .timeline{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
-    .step{padding:20px; background:rgba(0,0,0,.25); border-radius:14px; border:1px solid rgba(255,255,255,.08)}
+    .step{padding:20px; background:var(--soft); border-radius:14px; border:1px solid rgba(255,255,255,.06)}
     .step .dot{width:10px; height:10px; border-radius:999px; background:var(--fluor); display:inline-block; box-shadow:0 0 14px rgba(166,255,77,.9); margin-right:8px}
 
-    /* Form */
-    form{display:flex; gap:12px; flex-wrap:wrap; margin-top:20px}
-    input[type=email]{background:#0d0e12; color:var(--text); border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:12px 14px; min-width:260px}
-    input[type=email]:focus{outline:none; box-shadow:0 0 0 4px rgba(166,255,77,.16); border-color:rgba(166,255,77,.55)}
-
-    /* Footer */
-    footer{border-top:1px solid rgba(255,255,255,.1); background:#0b0b0c; color:var(--muted); padding:40px 0;}
-    footer .brand img{height:48px;}
-
-    /* Fade-in on scroll */
-    [data-fade]{opacity:0; transform:translateY(20px);}
-    .visible{opacity:1 !important; transform:translateY(0) !important; transition:all .8s ease;}
-
-    /* ===== Responsive ===== */
-    @media (max-width: 768px){
-      .wrap{padding:22px 16px;}
-      .brand img{height:60px;}
-      .hero{grid-template-columns:1fr; gap:22px; padding:36px 0 18px;}
-      .hero-right{order:-1; min-height:56vw; border-radius:14px;}
-      .hero-right::before{opacity:.95; filter:brightness(1.05) saturate(115%);}
-      h1{font-size:clamp(32px,8vw,44px); text-shadow:0 3px 14px rgba(0,0,0,.3);}
-      .accent{color:#D9FF80; text-shadow:0 6px 26px rgba(0,0,0,.35);}
-      .cta{gap:10px;}
-      .btn{width:100%; justify-content:center; padding:14px 16px;}
-      form{display:grid; grid-template-columns:1fr auto; gap:10px;}
-      form .btn{width:auto;}
-      input[type=email]{width:100%;}
-      .grid{grid-template-columns:1fr;}
-      .timeline{grid-template-columns:1fr;}
-      .step{padding:16px;}
-      footer .wrap{align-items:center !important; text-align:center;}
-      footer .brand img{height:38px;}
+    /* ===== FOOTER: ahora en verde fluor ===== */
+    footer{
+      border-top:1px solid rgba(255,255,255,.06);
+      background:linear-gradient(180deg, var(--fluor), var(--fluor-2));
+      color:#0b0b0c;          /* texto oscuro para contraste */
+      padding:36px 0 60px
     }
-    @media (max-width:420px){
-      .brand img{height:50px;}
-      h1{font-size:clamp(28px,9vw,38px);}
-      .hero-right{min-height:62vw;}
-      form{grid-template-columns:1fr;}
+    .foot{display:flex; flex-direction:column; gap:14px}
+    .foot a{color:#0b0b0c}
+    .foot .brand{gap:12px}
+    .foot .brand img{height:26px; filter:brightness(.1)} /* mantiene el logo oscuro sobre fondo claro */
+
+    /* Formularios */
+    form{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    input[type=email]{
+      background:#0d0e12; border:1px solid rgba(255,255,255,.1); color:var(--text);
+      padding:14px 14px; border-radius:12px; min-width:260px; outline:none
+    }
+    input[type=email]:focus{border-color:rgba(166,255,77,.55); box-shadow:0 0 0 4px rgba(166,255,77,.16)}
+
+    /* Responsive */
+    @media (max-width:1200px){
+      .brand img{height:140px}
+    }
+    @media (max-width: 960px){
+      .brand img{height:110px}
+      header{margin-bottom:-24px}
+      .hero{grid-template-columns:1fr; padding-top:36px}
+      .grid{grid-template-columns:1fr}
+      .timeline{grid-template-columns:1fr;}
+      .foot .brand{flex-direction:row}
+    }
+    @media (max-width:640px){
+      .brand img{height:72px}
+      header{margin-bottom:-12px}
     }
   </style>
 </head>
-
 <body>
   <header>
     <div class="wrap nav">
       <div class="brand" aria-label="Tokgol">
-        <img src="assets/tokgol-logo-dark.png" alt="TOKGOL" />
+        <img src="/assets/tokgol-logo-horizontal.png" alt="TOKGOL" width="560" height="180" />
       </div>
       <div class="tag">Sitio en desarrollo</div>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="hero" data-fade>
+    <section class="hero">
       <div>
+        <span class="kicker"><span class="dot"></span> Próximamente</span>
         <h1>Invertí en <span class="accent">goles</span>, ganá con talento.</h1>
         <p class="hdesc">
           Estamos construyendo una plataforma para conectar a inversores con carreras de futbolistas prometedores,
@@ -202,20 +208,14 @@
         </p>
         <div class="cta">
           <a class="btn primary" href="#waitlist">Unirme a la lista de espera</a>
-          <a class="btn ghost" href="#contacto">Contacto</a>
+          <a class="btn ghost" href="#roadmap">Ver hoja de ruta</a>
         </div>
-        <form action="https://formsubmit.co/el/fufahu" method="POST" id="waitlist">
-          <input type="hidden" name="_subject" value="Nuevo registro Tokgol" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_next" value="thanks.html" />
-          <input type="email" name="email" placeholder="tu@email.com" required />
-          <button class="btn primary" type="submit">Anotarme</button>
-        </form>
       </div>
+
       <div class="hero-right" aria-label="Vista previa estilo Tokgol"></div>
     </section>
 
-    <section class="section" id="features" data-fade>
+    <section class="section" id="features">
       <div class="grid">
         <div class="card">
           <div class="eyebrow">Transparencia</div>
@@ -235,37 +235,77 @@
       </div>
     </section>
 
-    <section class="section" id="roadmap" data-fade>
-      <h2 style="font-family:Sora,Inter,sans-serif; margin:0 0 16px; font-size:28px;">Hoja de ruta</h2>
-      <p class="muted" style="margin:0 0 18px">Plan tentativo de desarrollo y salida a mercado.</p>
+    <section class="section" id="waitlist">
+      <div class="card" style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
+        <div style="display:flex; align-items:center; gap:10px">
+          <span class="eyebrow">Únite</span><span class="muted">— Recibí avances del MVP</span>
+        </div>
+        <form action="https://formsubmit.co/el/fufahu" method="POST">
+          <input type="hidden" name="_subject" value="Nuevo registro a la waitlist de Tokgol" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value="/thanks.html" />
+          <label for="email" class="visually-hidden">Correo</label>
+          <input id="email" name="email" type="email" placeholder="tu@email.com" required>
+          <button class="btn primary" type="submit">Anotarme</button>
+        </form>
+        <small class="muted">Prometemos no hacer spam. Podrás desuscribirte cuando quieras.</small>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap">
       <div class="timeline">
-        <div class="step"><div><span class="dot"></span><strong>Q3 2025</strong></div><div class="muted">Definición de MVP y arquitectura inicial.</div></div>
-        <div class="step"><div><span class="dot"></span><strong>Q4 2025</strong></div><div class="muted">Desarrollo del MVP y validaciones.</div></div>
-        <div class="step"><div><span class="dot"></span><strong>Q1 2026</strong></div><div class="muted">Pilotos con clubes y agentes aliados.</div></div>
-        <div class="step"><div><span class="dot"></span><strong>Q2 2026</strong></div><div class="muted">Lanzamiento progresivo y expansión regional.</div></div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q3 2025</strong></div>
+          <div class="muted">Definición de MVP, diseño de experiencia y arquitectura inicial.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q4 2025</strong></div>
+          <div class="muted">Desarrollo del MVP y validaciones con primeros usuarios.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q1 2026</strong></div>
+          <div class="muted">Pilotos controlados con clubes y agentes aliados.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q2 2026</strong></div>
+          <div class="muted">Lanzamiento progresivo y expansión por mercados prioritarios.</div>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer id="contacto">
-    <div class="wrap" style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
-      <div class="brand"><img src="assets/tokgol-logo-dark.png" alt="TOKGOL" /></div>
-      <div class="muted">Contacto: <a href="mailto:ml@tokgol.com">ml@tokgol.com</a> — Tel: +595 981 524 777</div>
-      <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados.</small>
+  <footer>
+    <div class="wrap foot">
+      <div class="brand">
+        <img src="/assets/tokgol-logo-horizontal.png" alt="TOKGOL" width="220" height="26" />
+      </div>
+      <div class="contact">
+        <span>Contacto:</span>
+        <a href="tel:+595981524777">Teléfono: +595 981 524 777</a>
+        <span>·</span>
+        <a href="mailto:ml@tokgol.com">ml@tokgol.com</a>
+      </div>
+      <small>© <span id="year"></span> Tokgol. Todos los derechos reservados. — Sitio en desarrollo.</small>
     </div>
   </footer>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    const io = new IntersectionObserver((entries)=>{
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Apariciones suaves
+    const observer = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
-          e.target.classList.add("visible");
-          io.unobserve(e.target);
+          e.target.animate([
+            {opacity:0, transform:'translateY(14px)'},
+            {opacity:1, transform:'translateY(0)'}
+          ], {duration:600, easing:'cubic-bezier(.22,.61,.36,1)', fill:'forwards'});
+          observer.unobserve(e.target);
         }
-      });
-    },{threshold:0.2});
-    document.querySelectorAll("[data-fade]").forEach(el=>io.observe(el));
+      })
+    }, {threshold:.1});
+    document.querySelectorAll('.card, .step, .hero > div:first-child').forEach(el=>observer.observe(el));
   </script>
 </body>
 </html>
