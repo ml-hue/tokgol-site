@@ -4,83 +4,95 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TOKGOL — Invertí en goles, ganá con talento</title>
-  <meta name="description" content="Tokgol está construyendo una plataforma para invertir en talento futbolístico. Sitio en desarrollo. Únete a la lista de espera." />
-  <meta property="og:title" content="TOKGOL — Sitio en desarrollo" />
+  <meta name="description" content="Tokgol está construyendo una plataforma para invertir en talento futbolístico. Únete a la lista de espera del MVP." />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="TOKGOL — Invertí en goles, ganá con talento" />
   <meta property="og:description" content="Invertí en talento futbolístico con transparencia. Súmate a la lista de espera del MVP." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/tokgol-logo-vertical.png" />
-  <meta name="theme-color" content="#0b0b0c" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="TOKGOL — Invertí en goles, ganá con talento" />
   <meta name="twitter:description" content="Estamos construyendo la plataforma para invertir en talento futbolístico." />
   <meta name="twitter:image" content="assets/tokgol-logo-vertical.png" />
+  <meta name="theme-color" content="#0b0b0c" />
 
-  <!-- Favicon -->
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-
-  <!-- Tipografías -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg:#0b0b0c;
+    :root{
       --text:#f2f4f5;
       --muted:#aab0b6;
       --fluor:#A6FF4D;
       --fluor-2:#7CF05A;
       --fluor-glow:0 0 44px rgba(166,255,77,.28);
+      --card:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
     }
 
-    body {
-      margin:0; font-family:Inter, sans-serif; color:var(--text);
+    *{box-sizing:border-box}
+    body{
+      margin:0; color:var(--text); font-family:Inter,system-ui,sans-serif; line-height:1.55;
       background:
         radial-gradient(120% 120% at 110% -10%, rgba(166,255,77,.35) 0%, rgba(166,255,77,0) 55%),
         radial-gradient(80% 110% at -10% 30%, rgba(124,240,90,.28) 0%, rgba(124,240,90,0) 60%),
-        linear-gradient(160deg, #B8FF60 0%, #9BFF5B 35%, #84F35A 65%, #6DE55A 100%),
+        linear-gradient(160deg,#B8FF60 0%,#9BFF5B 35%,#84F35A 65%,#6DE55A 100%),
         repeating-linear-gradient(135deg, rgba(0,0,0,.05) 0 10px, rgba(0,0,0,0) 10px 22px);
-      background-blend-mode: screen, screen, normal, overlay;
+      background-blend-mode:screen,screen,normal,overlay;
       overflow-x:hidden;
     }
-    .wrap {max-width:1200px; margin:0 auto; padding:32px 20px}
+    a{color:var(--text); text-decoration:none}
+    .wrap{max-width:1200px; margin:0 auto; padding:32px 20px}
 
-    header {
-      position:sticky; top:0; backdrop-filter:blur(10px);
-      background:rgba(0,0,0,0.4); border-bottom:1px solid rgba(255,255,255,.06);
-      z-index:20;
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter:blur(10px);
+      background:rgba(0,0,0,.35);
+      border-bottom:1px solid rgba(255,255,255,.06)
     }
-    .nav {display:flex; align-items:center; justify-content:space-between;}
-    .brand img {height:26px; display:block;}
-    .tag {font-size:12px; background:var(--fluor); color:#000; padding:6px 10px; border-radius:999px;}
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .brand img{height:28px; display:block}
+    .tag{font-size:12px; background:var(--fluor); color:#000; padding:6px 10px; border-radius:999px; font-weight:700}
 
-    /* HERO */
-    .hero {
+    /* Hero */
+    .hero{
+      position:relative;
       display:grid; grid-template-columns:1.12fr .88fr; gap:36px; align-items:center;
       padding:64px 0;
     }
-    h1 {
-      font-family:Sora, Inter, sans-serif; font-weight:800;
-      font-size:clamp(36px, 5vw, 68px); line-height:1.05;
+    /* vignette suave para contraste */
+    .hero::before{
+      content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+      background:radial-gradient(120% 100% at 0% 40%, rgba(0,0,0,.26) 0%, rgba(0,0,0,0) 55%);
     }
-    .accent {color:var(--fluor);}
-    .hdesc {color:var(--muted); max-width:60ch;}
-    .cta {display:flex; gap:12px; margin-top:22px;}
-    .btn {
-      padding:14px 18px; border-radius:12px; font-weight:700;
-      text-decoration:none; transition:all .2s ease;
-    }
-    .btn.primary {background:linear-gradient(180deg,var(--fluor),var(--fluor-2)); color:#000;}
-    .btn.primary:hover {box-shadow:0 0 20px rgba(166,255,77,.4); transform:translateY(-2px);}
-    .btn.ghost {border:1px solid rgba(255,255,255,.2); color:var(--text);}
-    .btn.ghost:hover {background:rgba(255,255,255,.05);}
+    .hero > *{ position:relative; z-index:1; }
 
-    /* HERO PANEL */
-    .hero-right {
-      position:relative; border-radius:18px; overflow:hidden;
-      min-height:clamp(260px,36vw,520px);
-      background:linear-gradient(160deg,rgba(14,18,22,0.8),rgba(7,21,14,0.6));
+    h1{
+      font-family:Sora, Inter, ui-sans-serif; font-weight:800;
+      font-size:clamp(36px,5vw,68px); line-height:1.05; margin:16px 0 10px;
+      color:#fff; text-shadow:0 2px 12px rgba(0,0,0,.22);
     }
-    .hero-right::before {
+    .accent{ color:#CFFF74; text-shadow:0 4px 24px rgba(0,0,0,.35); }
+    .hdesc{ color:var(--muted); max-width:60ch }
+
+    .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+    .btn{ padding:14px 18px; border-radius:12px; font-weight:700; transition:all .2s ease; display:inline-flex; align-items:center; }
+    .btn.primary{ background:linear-gradient(180deg,var(--fluor),var(--fluor-2)); color:#000; box-shadow:0 10px 22px rgba(166,255,77,.22) }
+    .btn.primary:hover{ transform:translateY(-2px); box-shadow:0 16px 28px rgba(166,255,77,.34)}
+    .btn.ghost{ border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.02) }
+    .btn.ghost:hover{ background:rgba(255,255,255,.06) }
+
+    /* Hero panel (imagen) */
+    .hero-right{
+      position:relative; min-height:clamp(260px,36vw,520px);
+      border-radius:18px; overflow:hidden;
+      background:linear-gradient(160deg,rgba(14,18,22,.8),rgba(7,21,14,.6));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+    .hero-right::before{
       content:""; position:absolute; inset:0;
       background-image:image-set(
         url("assets/hero-app-blur.webp") type("image/webp") 1x,
@@ -88,33 +100,42 @@
       );
       background-size:cover; background-position:center;
       opacity:0; filter:brightness(1.1) saturate(120%);
-      animation:fadeInHero 1.6s ease-in-out forwards;
+      animation:fadeInHero 1.4s ease-in-out forwards;
     }
-    @keyframes fadeInHero {
-      from {opacity:0; transform:scale(1.03) blur(6px);}
-      to {opacity:.9; transform:scale(1.02);}
-    }
-
-    /* FORM */
-    form {display:flex; flex-wrap:wrap; gap:12px; margin-top:20px;}
-    input[type=email] {
-      background:#0d0e12; color:var(--text);
-      border:1px solid rgba(255,255,255,.2); border-radius:10px;
-      padding:12px 14px; min-width:260px;
+    @keyframes fadeInHero{
+      from{opacity:0; transform:scale(1.03)}
+      to{opacity:.9; transform:scale(1.02)}
     }
 
-    /* FADE-IN EN SCROLL */
-    [data-fade] {opacity:0; transform:translateY(20px);}
-    .visible {opacity:1 !important; transform:translateY(0) !important; transition:all .8s ease;}
+    /* Tarjetas + timeline */
+    .section{padding:64px 0}
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .card{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:24px; position:relative; box-shadow:var(--fluor-glow)}
+    .card h3{margin:6px 0 6px; font-family:Sora, Inter, ui-sans-serif}
+    .eyebrow{font-size:12px; letter-spacing:.35px; color:var(--fluor); font-weight:800; text-transform:uppercase}
+    .muted{color:var(--muted)}
 
-    footer {
-      border-top:1px solid rgba(255,255,255,.1);
-      background:#0b0b0c; color:var(--muted);
-      text-align:center; padding:40px 0;
-    }
+    .timeline{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
+    .step{padding:20px; background:rgba(0,0,0,.25); border-radius:14px; border:1px solid rgba(255,255,255,.08)}
+    .step .dot{width:10px; height:10px; border-radius:999px; background:var(--fluor); display:inline-block; box-shadow:0 0 14px rgba(166,255,77,.9); margin-right:8px}
+
+    /* Form */
+    form{display:flex; gap:12px; flex-wrap:wrap; margin-top:20px}
+    input[type=email]{ background:#0d0e12; color:var(--text); border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:12px 14px; min-width:260px }
+    input[type=email]:focus{ outline:none; box-shadow:0 0 0 4px rgba(166,255,77,.16); border-color:rgba(166,255,77,.55) }
+
+    /* Fade-in on scroll */
+    [data-fade]{opacity:0; transform:translateY(20px)}
+    .visible{opacity:1 !important; transform:translateY(0) !important; transition:all .8s ease}
+
+    /* Footer */
+    footer{ border-top:1px solid rgba(255,255,255,.1); background:#0b0b0c; color:var(--muted); padding:40px 0; }
+    footer .brand img{height:24px}
 
     @media (max-width:960px){
       .hero{grid-template-columns:1fr; padding-top:36px}
+      .grid{grid-template-columns:1fr}
+      .timeline{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -122,14 +143,15 @@
 <body>
   <header>
     <div class="wrap nav">
-      <div class="brand">
-        <img src="assets/tokgol-logo-icon.png" alt="TOKGOL" width="160" height="26" />
+      <div class="brand" aria-label="Tokgol">
+        <img src="assets/tokgol-logo-horizontal.png" alt="TOKGOL" />
       </div>
       <div class="tag">Sitio en desarrollo</div>
     </div>
   </header>
 
   <main class="wrap">
+    <!-- HERO -->
     <section class="hero" data-fade>
       <div>
         <h1>Invertí en <span class="accent">goles</span>, ganá con talento.</h1>
@@ -142,7 +164,7 @@
           <a class="btn ghost" href="#contacto">Contacto</a>
         </div>
 
-        <!-- FORMULARIO -->
+        <!-- FORM -->
         <form action="https://formsubmit.co/el/fufahu" method="POST" id="waitlist">
           <input type="hidden" name="_subject" value="Nuevo registro Tokgol" />
           <input type="hidden" name="_captcha" value="false" />
@@ -152,34 +174,77 @@
         </form>
       </div>
 
-      <div class="hero-right"></div>
+      <div class="hero-right" aria-label="Vista previa estilo Tokgol"></div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section" id="features" data-fade>
+      <div class="grid">
+        <div class="card">
+          <div class="eyebrow">Transparencia</div>
+          <h3>Tokenización responsable</h3>
+          <p class="muted">Estructuras claras orientadas a la protección del inversor y del jugador, con procesos de cumplimiento integrados.</p>
+        </div>
+        <div class="card">
+          <div class="eyebrow">Tecnología</div>
+          <h3>Arquitectura preparada para escalar</h3>
+          <p class="muted">Infra moderna, integraciones seguras y una experiencia simple para operar desde cualquier lugar.</p>
+        </div>
+        <div class="card">
+          <div class="eyebrow">Comunidad</div>
+          <h3>Alianzas y acceso</h3>
+          <p class="muted">Conectamos clubes, talentos y capital a través de una comunidad global con foco en LATAM.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section class="section" id="roadmap" data-fade>
+      <h2 style="font-family:Sora,Inter,sans-serif; margin:0 0 16px; font-size:28px;">Hoja de ruta</h2>
+      <p class="muted" style="margin:0 0 18px">Plan tentativo de desarrollo y salida a mercado.</p>
+      <div class="timeline">
+        <div class="step">
+          <div><span class="dot"></span><strong>Q3 2025</strong></div>
+          <div class="muted">Definición de MVP, diseño de experiencia y arquitectura inicial.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q4 2025</strong></div>
+          <div class="muted">Desarrollo del MVP y validaciones con primeros usuarios.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q1 2026</strong></div>
+          <div class="muted">Pilotos controlados con clubes y agentes aliados.</div>
+        </div>
+        <div class="step">
+          <div><span class="dot"></span><strong>Q2 2026</strong></div>
+          <div class="muted">Lanzamiento progresivo y expansión por mercados prioritarios.</div>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <div class="wrap">
-      <div class="brand">
-        <img src="assets/tokgol-logo-icon.png" alt="TOKGOL" width="140" height="22" />
-      </div>
-      <div>Contacto: <a href="mailto:ml@tokgol.com">ml@tokgol.com</a></div>
-      <small>© <span id="year"></span> Tokgol. Todos los derechos reservados.</small>
+  <footer id="contacto">
+    <div class="wrap" style="display:flex; flex-direction:column; gap:12px; align-items:flex-start">
+      <div class="brand"><img src="assets/tokgol-logo-horizontal.png" alt="TOKGOL" /></div>
+      <div class="muted">Contacto: <a href="mailto:ml@tokgol.com">ml@tokgol.com</a> — Tel: +595 981 524 777</div>
+      <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados.</small>
     </div>
   </footer>
 
   <script>
-    // año dinámico
+    // Año dinámico
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // fade-in en scroll
-    const observer = new IntersectionObserver(entries=>{
+    // Fade-in on scroll
+    const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
           e.target.classList.add("visible");
-          observer.unobserve(e.target);
+          io.unobserve(e.target);
         }
       });
     },{threshold:0.2});
-    document.querySelectorAll("[data-fade]").forEach(el=>observer.observe(el));
+    document.querySelectorAll("[data-fade]").forEach(el=>io.observe(el));
   </script>
 </body>
 </html>
