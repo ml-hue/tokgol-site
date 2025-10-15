@@ -10,11 +10,11 @@
   <meta property="og:title" content="TOKGOL — Invertí en goles, ganá con talento" />
   <meta property="og:description" content="Invertí en talento futbolístico con transparencia. Súmate a la lista de espera del MVP." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/tokgol-logo-vertical.png" />
+  <meta property="og:image" content="assets/tokgol-logo-dark.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="TOKGOL — Invertí en goles, ganá con talento" />
   <meta name="twitter:description" content="Estamos construyendo la plataforma para invertir en talento futbolístico." />
-  <meta name="twitter:image" content="assets/tokgol-logo-vertical.png" />
+  <meta name="twitter:image" content="assets/tokgol-logo-dark.png" />
   <meta name="theme-color" content="#0b0b0c" />
 
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
@@ -53,7 +53,14 @@
       border-bottom:1px solid rgba(255,255,255,.06)
     }
     .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
-    .brand img{height:28px; display:block}
+    .brand img{
+      height:52px;
+      display:block;
+      margin-top:6px;
+      filter:brightness(1.15) contrast(1.1);
+      transition:transform .25s ease;
+    }
+    .brand img:hover{transform:scale(1.04);}
     .tag{font-size:12px; background:var(--fluor); color:#000; padding:6px 10px; border-radius:999px; font-weight:700}
 
     /* Hero */
@@ -62,7 +69,6 @@
       display:grid; grid-template-columns:1.12fr .88fr; gap:36px; align-items:center;
       padding:64px 0;
     }
-    /* vignette suave para contraste */
     .hero::before{
       content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
       background:radial-gradient(120% 100% at 0% 40%, rgba(0,0,0,.26) 0%, rgba(0,0,0,0) 55%);
@@ -84,7 +90,7 @@
     .btn.ghost{ border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.02) }
     .btn.ghost:hover{ background:rgba(255,255,255,.06) }
 
-    /* Hero panel (imagen) */
+    /* Hero panel */
     .hero-right{
       position:relative; min-height:clamp(260px,36vw,520px);
       border-radius:18px; overflow:hidden;
@@ -130,7 +136,7 @@
 
     /* Footer */
     footer{ border-top:1px solid rgba(255,255,255,.1); background:#0b0b0c; color:var(--muted); padding:40px 0; }
-    footer .brand img{height:24px}
+    footer .brand img{height:36px}
 
     @media (max-width:960px){
       .hero{grid-template-columns:1fr; padding-top:36px}
@@ -144,7 +150,7 @@
   <header>
     <div class="wrap nav">
       <div class="brand" aria-label="Tokgol">
-        <img src="assets/tokgol-logo-horizontal.png" alt="TOKGOL" />
+        <img src="assets/tokgol-logo-dark.png" alt="TOKGOL" />
       </div>
       <div class="tag">Sitio en desarrollo</div>
     </div>
@@ -225,7 +231,7 @@
 
   <footer id="contacto">
     <div class="wrap" style="display:flex; flex-direction:column; gap:12px; align-items:flex-start">
-      <div class="brand"><img src="assets/tokgol-logo-horizontal.png" alt="TOKGOL" /></div>
+      <div class="brand"><img src="assets/tokgol-logo-dark.png" alt="TOKGOL" /></div>
       <div class="muted">Contacto: <a href="mailto:ml@tokgol.com">ml@tokgol.com</a> — Tel: +595 981 524 777</div>
       <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados.</small>
     </div>
