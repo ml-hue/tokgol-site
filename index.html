@@ -15,24 +15,23 @@
   <meta name="twitter:description" content="Estamos construyendo la plataforma para invertir en talento futbolístico." />
   <meta name="twitter:image" content="/assets/tokgol-logo-vertical.png" />
 
-  <!-- Favicon nuevo -->
+  <!-- Favicon -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 
-  <!-- Tipografías: Sora (títulos), Inter (texto) -->
+  <!-- Tipografías -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      /* Paleta Tokgol 2025 */
-      --bg:#0b0b0c;                 /* base oscuro */
-      --panel:#101114;              /* paneles */
-      --soft:#14161a;               /* tarjetas suaves */
-      --text:#f2f4f5;               /* texto principal */
-      --muted:#aab0b6;              /* texto secundario */
-      --ink:#0c0d10;                /* negro “tinta” */
-      --fluor:#A6FF4D;              /* verde fluorescente del slide */
-      --fluor-2:#7CF05A;            /* apoyo gradiente */
+    :root {
+      --bg:#0b0b0c;
+      --panel:#101114;
+      --soft:#14161a;
+      --text:#f2f4f5;
+      --muted:#aab0b6;
+      --ink:#0c0d10;
+      --fluor:#A6FF4D;
+      --fluor-2:#7CF05A;
       --fluor-glow:0 0 44px rgba(166,255,77,.28);
       --ring:1px solid rgba(255,255,255,.06);
       --radius:16px;
@@ -44,7 +43,6 @@
       margin:0;
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
       color:var(--text); line-height:1.55; letter-spacing:.2px;
-      /* Fondo verde tipo slide (fluor) con destellos y una textura sutil en zig-zag */
       background:
         radial-gradient(120% 120% at 110% -10%, rgba(166,255,77,.35) 0%, rgba(166,255,77,0) 55%),
         radial-gradient(80% 110% at -10% 30%, rgba(124,240,90,.28) 0%, rgba(124,240,90,0) 60%),
@@ -83,7 +81,6 @@
     }
     .accent{color:var(--fluor); text-shadow:0 6px 46px rgba(166,255,77,.28)}
     .hdesc{font-size: clamp(16px, 2.4vw, 18px); color:var(--muted); max-width:60ch}
-
     .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
     .btn{
       display:inline-flex; align-items:center; gap:10px;
@@ -95,56 +92,44 @@
     .btn.ghost{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.02)}
     .btn.ghost:hover{background:rgba(255,255,255,.05)}
 
-   /* Panel visual (gradiente + imagen de apoyo sin blur CSS) */
-.hero-right{
-  position:relative;
-  min-height: clamp(260px, 36vw, 520px);
-  border-radius: 18px;
-  overflow:hidden;
-  background-image:
-    radial-gradient(120% 120% at 100% 0%, rgba(166,255,77,0.22) 0%, rgba(10,10,12,0.0) 45%),
-    linear-gradient(160deg, #0e1216 0%, #0b1112 45%, #07150e 100%);
-  background-size: cover, cover;
-  background-position: center, center;
-  background-repeat:no-repeat;
-  border:1px solid rgba(255,255,255,.06);
-  box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
-}
-
-.hero-right::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:0;
-  /* Imagen real Tokgol hero */
-  background-image: image-set(
-    url("/assets/hero-app-blur.webp") type("image/webp") 1x,
-    url("/assets/hero-app-blur.jpg") type("image/jpeg") 1x
-  );
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transform: scale(1.02);
-  opacity: .85;
-  filter: saturate(110%) contrast(105%);
-}
-
-    /* ===== Secciones ===== */
-    .section{padding:64px 0}
-    .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px}
-    .card{
-      border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-      border:1px solid rgba(255,255,255,.06); padding:24px; position:relative
+    /* ===== HERO PANEL VISUAL (con fade-in mejorado) ===== */
+    .hero-right {
+      position: relative;
+      min-height: clamp(260px, 36vw, 520px);
+      border-radius: 18px;
+      overflow: hidden;
+      background-image:
+        radial-gradient(120% 120% at 100% 0%, rgba(166,255,77,0.18) 0%, rgba(10,10,12,0.0) 45%),
+        linear-gradient(160deg, rgba(14,18,22,0.8) 0%, rgba(11,17,18,0.7) 45%, rgba(7,21,14,0.6) 100%);
+      background-size: cover, cover;
+      background-position: center, center;
+      background-repeat: no-repeat;
+      border: 1px solid rgba(255,255,255,.06);
+      box-shadow: 0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
+      z-index: 0;
     }
-    .card:after{content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; box-shadow:var(--fluor-glow)}
-    .card h3{margin:6px 0 6px; font-family:Sora, Inter, ui-sans-serif}
-    .eyebrow{font-size:12px; letter-spacing:.35px; color:var(--fluor); font-weight:800; text-transform:uppercase}
-    .muted{color:var(--muted)}
 
-    .timeline{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
-    .step{padding:20px; background:var(--soft); border-radius:14px; border:1px solid rgba(255,255,255,.06)}
-    .step .dot{width:10px; height:10px; border-radius:999px; background:var(--fluor); display:inline-block; box-shadow:0 0 14px rgba(166,255,77,.9); margin-right:8px}
+    .hero-right::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-image: image-set(
+        url("/assets/hero-app-blur.webp") type("image/webp") 1x,
+        url("/assets/hero-app-blur.jpg") type("image/jpeg") 1x
+      );
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      filter: brightness(1.1) contrast(110%) saturate(120%);
+      animation: fadeInHero 1.6s ease-in-out forwards;
+    }
+
+    @keyframes fadeInHero {
+      from { opacity: 0; transform: scale(1.03); filter: brightness(0.8) blur(6px); }
+      to { opacity: 0.9; transform: scale(1.02); filter: brightness(1.1) contrast(110%) saturate(120%); }
+    }
 
     /* ===== FOOTER ===== */
     footer{
@@ -153,31 +138,20 @@
       padding:36px 0 60px
     }
     .foot{display:flex; flex-direction:column; gap:14px; color:var(--muted)}
-    .foot .brand{gap:12px}
     .foot .brand img{height:22px}
-
-    /* Formularios */
-    form{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    input[type=email]{
-      background:#0d0e12; border:1px solid rgba(255,255,255,.1); color:var(--text);
-      padding:14px 14px; border-radius:12px; min-width:260px; outline:none
-    }
-    input[type=email]:focus{border-color:rgba(166,255,77,.55); box-shadow:0 0 0 4px rgba(166,255,77,.16)}
 
     /* Responsive */
     @media (max-width: 960px){
       .hero{grid-template-columns:1fr; padding-top:36px}
-      .grid{grid-template-columns:1fr}
-      .timeline{grid-template-columns:1fr;}
-      .foot .brand{flex-direction:row}
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="wrap nav">
       <div class="brand" aria-label="Tokgol">
-        <<img src="/assets/tokgol-logo-icon.png" alt="TOKGOL" width="160" height="26" />
+        <img src="/assets/tokgol-logo-icon.png" alt="TOKGOL" width="160" height="26" />
       </div>
       <div class="tag">Sitio en desarrollo</div>
     </div>
@@ -198,67 +172,7 @@
         </div>
       </div>
 
-      <!-- Panel derecho: gradiente + imagen del slide (opcional). Sin blur en CSS -->
       <div class="hero-right" aria-label="Vista previa estilo Tokgol"></div>
-    </section>
-
-    <section class="section" id="features">
-      <div class="grid">
-        <div class="card">
-          <div class="eyebrow">Transparencia</div>
-          <h3>Tokenización responsable</h3>
-          <p class="muted">Estructuras claras orientadas a la protección del inversor y del jugador, con procesos de cumplimiento integrados.</p>
-        </div>
-        <div class="card">
-          <div class="eyebrow">Tecnología</div>
-          <h3>Arquitectura preparada para escalar</h3>
-          <p class="muted">Infra moderna, integraciones seguras y una experiencia simple para operar desde cualquier lugar.</p>
-        </div>
-        <div class="card">
-          <div class="eyebrow">Comunidad</div>
-          <h3>Alianzas y acceso</h3>
-          <p class="muted">Conectamos clubes, talentos y capital a través de una comunidad global con foco en LATAM.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="waitlist">
-      <div class="card" style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
-        <div style="display:flex; align-items:center; gap:10px">
-          <span class="eyebrow">Únite</span><span class="muted">— Recibí avances del MVP</span>
-        </div>
-        <form action="https://formsubmit.co/el/fufahu" method="POST">
-          <input type="hidden" name="_subject" value="Nuevo registro a la waitlist de Tokgol" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_next" value="/thanks.html" />
-          <label for="email" class="visually-hidden">Correo</label>
-          <input id="email" name="email" type="email" placeholder="tu@email.com" required>
-          <button class="btn primary" type="submit">Anotarme</button>
-        </form>
-        <small class="muted">Prometemos no hacer spam. Podrás desuscribirte cuando quieras.</small>
-      </div>
-    </section>
-
-    <section class="section" id="roadmap">
-      <div class="timeline">
-        <div class="step">
-          <div><span class="dot"></span><strong>Q3 2025</strong></div>
-          <div class="muted">Definición de MVP, diseño de experiencia y arquitectura inicial.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q4 2025</strong></div>
-          <div class="muted">Desarrollo del MVP y validaciones con primeros usuarios.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q1 2026</strong></div>
-          <div class="muted">Pilotos controlados con clubes y agentes aliados.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q2 2026</strong></div>
-          <div class="muted">Lanzamiento progresivo y expansión por mercados prioritarios.</div>
-        </div>
-      </div>
     </section>
   </main>
 
@@ -268,31 +182,14 @@
         <img src="/assets/tokgol-logo-icon.png" alt="TOKGOL" width="140" height="22" />
       </div>
       <div class="contact">
-        <span>Contacto:</span>
-        <a href="tel:+595981524777">Teléfono: +595 981 524 777</a>
-        <span>·</span>
         <a href="mailto:ml@tokgol.com">ml@tokgol.com</a>
       </div>
-      <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados. — Sitio en desarrollo.</small>
+      <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados.</small>
     </div>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // apariciones suaves
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          e.target.animate([
-            {opacity:0, transform:'translateY(14px)'},
-            {opacity:1, transform:'translateY(0)'}
-          ], {duration:600, easing:'cubic-bezier(.22,.61,.36,1)', fill:'forwards'});
-          observer.unobserve(e.target);
-        }
-      })
-    }, {threshold:.1});
-    document.querySelectorAll('.card, .step, .hero > div:first-child').forEach(el=>observer.observe(el));
   </script>
 </body>
 </html>
