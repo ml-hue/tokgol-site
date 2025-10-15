@@ -6,23 +6,20 @@
   <title>TOKGOL — Invertí en goles, ganá con talento</title>
   <meta name="description" content="Tokgol está construyendo una plataforma para invertir en talento futbolístico. Únete a la lista de espera del MVP." />
 
-  <!-- Open Graph / Twitter -->
+  <!-- Meta OG -->
   <meta property="og:title" content="TOKGOL — Invertí en goles, ganá con talento" />
   <meta property="og:description" content="Invertí en talento futbolístico con transparencia. Súmate a la lista de espera del MVP." />
-  <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/tokgol-logo-dark.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="TOKGOL — Invertí en goles, ganá con talento" />
-  <meta name="twitter:description" content="Estamos construyendo la plataforma para invertir en talento futbolístico." />
-  <meta name="twitter:image" content="assets/tokgol-logo-dark.png" />
   <meta name="theme-color" content="#0b0b0c" />
 
+  <!-- Favicon -->
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sora:wght@700;800&display=swap" rel="stylesheet" />
 
   <style>
-    :root{
+    :root {
       --text:#f2f4f5;
       --muted:#aab0b6;
       --fluor:#A6FF4D;
@@ -42,25 +39,30 @@
       background-blend-mode:screen,screen,normal,overlay;
       overflow-x:hidden;
     }
+
     a{color:var(--text); text-decoration:none}
     .wrap{max-width:1200px; margin:0 auto; padding:32px 20px}
 
     /* Header */
-    header{
-      position:sticky; top:0; z-index:20;
-      backdrop-filter:blur(10px);
-      background:rgba(0,0,0,.35);
-      border-bottom:1px solid rgba(255,255,255,.06)
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, .35);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 8px 0;
     }
     .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
     .brand img{
-      height:52px;
+      height:84px;
+      max-height:10vh;
       display:block;
-      margin-top:6px;
-      filter:brightness(1.15) contrast(1.1);
-      transition:transform .25s ease;
+      margin:4px 0;
+      filter:brightness(1.15) contrast(1.05);
+      transition:transform .25s ease, filter .25s ease;
     }
-    .brand img:hover{transform:scale(1.04);}
+    .brand img:hover{transform:scale(1.05); filter:brightness(1.25) contrast(1.1)}
     .tag{font-size:12px; background:var(--fluor); color:#000; padding:6px 10px; border-radius:999px; font-weight:700}
 
     /* Hero */
@@ -69,55 +71,68 @@
       display:grid; grid-template-columns:1.12fr .88fr; gap:36px; align-items:center;
       padding:64px 0;
     }
-    .hero::before{
-      content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-      background:radial-gradient(120% 100% at 0% 40%, rgba(0,0,0,.26) 0%, rgba(0,0,0,0) 55%);
-    }
-    .hero > *{ position:relative; z-index:1; }
-
     h1{
-      font-family:Sora, Inter, ui-sans-serif; font-weight:800;
-      font-size:clamp(36px,5vw,68px); line-height:1.05; margin:16px 0 10px;
-      color:#fff; text-shadow:0 2px 12px rgba(0,0,0,.22);
+      font-family:Sora,Inter,sans-serif;
+      font-weight:800;
+      font-size:clamp(36px,5vw,68px);
+      line-height:1.05;
+      margin:16px 0 10px;
+      color:#fff;
+      text-shadow:0 2px 12px rgba(0,0,0,.22);
     }
-    .accent{ color:#CFFF74; text-shadow:0 4px 24px rgba(0,0,0,.35); }
-    .hdesc{ color:var(--muted); max-width:60ch }
+    .accent{color:#CFFF74; text-shadow:0 4px 24px rgba(0,0,0,.35);}
+    .hdesc{color:var(--muted); max-width:60ch;}
 
     .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
-    .btn{ padding:14px 18px; border-radius:12px; font-weight:700; transition:all .2s ease; display:inline-flex; align-items:center; }
-    .btn.primary{ background:linear-gradient(180deg,var(--fluor),var(--fluor-2)); color:#000; box-shadow:0 10px 22px rgba(166,255,77,.22) }
-    .btn.primary:hover{ transform:translateY(-2px); box-shadow:0 16px 28px rgba(166,255,77,.34)}
-    .btn.ghost{ border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.02) }
-    .btn.ghost:hover{ background:rgba(255,255,255,.06) }
+    .btn{
+      padding:14px 18px;
+      border-radius:12px;
+      font-weight:700;
+      transition:all .2s ease;
+      display:inline-flex; align-items:center;
+    }
+    .btn.primary{
+      background:linear-gradient(180deg,var(--fluor),var(--fluor-2));
+      color:#000;
+      box-shadow:0 10px 22px rgba(166,255,77,.22)
+    }
+    .btn.primary:hover{transform:translateY(-2px); box-shadow:0 16px 28px rgba(166,255,77,.34)}
+    .btn.ghost{border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.02)}
+    .btn.ghost:hover{background:rgba(255,255,255,.06)}
 
     /* Hero panel */
     .hero-right{
-      position:relative; min-height:clamp(260px,36vw,520px);
-      border-radius:18px; overflow:hidden;
+      position:relative;
+      min-height:clamp(260px,36vw,520px);
+      border-radius:18px;
+      overflow:hidden;
       background:linear-gradient(160deg,rgba(14,18,22,.8),rgba(7,21,14,.6));
       border:1px solid rgba(255,255,255,.06);
       box-shadow:0 20px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.03);
     }
     .hero-right::before{
-      content:""; position:absolute; inset:0;
+      content:"";
+      position:absolute; inset:0;
       background-image:image-set(
         url("assets/hero-app-blur.webp") type("image/webp") 1x,
         url("assets/hero-app-blur.jpg") type("image/jpeg") 1x
       );
-      background-size:cover; background-position:center;
-      opacity:0; filter:brightness(1.1) saturate(120%);
+      background-size:cover;
+      background-position:center;
+      opacity:0;
+      filter:brightness(1.1) saturate(120%);
       animation:fadeInHero 1.4s ease-in-out forwards;
     }
     @keyframes fadeInHero{
-      from{opacity:0; transform:scale(1.03)}
-      to{opacity:.9; transform:scale(1.02)}
+      from{opacity:0; transform:scale(1.03);}
+      to{opacity:.9; transform:scale(1.02);}
     }
 
-    /* Tarjetas + timeline */
+    /* Sections */
     .section{padding:64px 0}
     .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
     .card{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:24px; position:relative; box-shadow:var(--fluor-glow)}
-    .card h3{margin:6px 0 6px; font-family:Sora, Inter, ui-sans-serif}
+    .card h3{margin:6px 0 6px; font-family:Sora,Inter,sans-serif}
     .eyebrow{font-size:12px; letter-spacing:.35px; color:var(--fluor); font-weight:800; text-transform:uppercase}
     .muted{color:var(--muted)}
 
@@ -127,21 +142,42 @@
 
     /* Form */
     form{display:flex; gap:12px; flex-wrap:wrap; margin-top:20px}
-    input[type=email]{ background:#0d0e12; color:var(--text); border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:12px 14px; min-width:260px }
-    input[type=email]:focus{ outline:none; box-shadow:0 0 0 4px rgba(166,255,77,.16); border-color:rgba(166,255,77,.55) }
-
-    /* Fade-in on scroll */
-    [data-fade]{opacity:0; transform:translateY(20px)}
-    .visible{opacity:1 !important; transform:translateY(0) !important; transition:all .8s ease}
+    input[type=email]{background:#0d0e12; color:var(--text); border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:12px 14px; min-width:260px}
+    input[type=email]:focus{outline:none; box-shadow:0 0 0 4px rgba(166,255,77,.16); border-color:rgba(166,255,77,.55)}
 
     /* Footer */
-    footer{ border-top:1px solid rgba(255,255,255,.1); background:#0b0b0c; color:var(--muted); padding:40px 0; }
-    footer .brand img{height:36px}
+    footer{border-top:1px solid rgba(255,255,255,.1); background:#0b0b0c; color:var(--muted); padding:40px 0;}
+    footer .brand img{height:48px;}
 
-    @media (max-width:960px){
-      .hero{grid-template-columns:1fr; padding-top:36px}
-      .grid{grid-template-columns:1fr}
-      .timeline{grid-template-columns:1fr}
+    /* Fade-in on scroll */
+    [data-fade]{opacity:0; transform:translateY(20px);}
+    .visible{opacity:1 !important; transform:translateY(0) !important; transition:all .8s ease;}
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px){
+      .wrap{padding:22px 16px;}
+      .brand img{height:60px;}
+      .hero{grid-template-columns:1fr; gap:22px; padding:36px 0 18px;}
+      .hero-right{order:-1; min-height:56vw; border-radius:14px;}
+      .hero-right::before{opacity:.95; filter:brightness(1.05) saturate(115%);}
+      h1{font-size:clamp(32px,8vw,44px); text-shadow:0 3px 14px rgba(0,0,0,.3);}
+      .accent{color:#D9FF80; text-shadow:0 6px 26px rgba(0,0,0,.35);}
+      .cta{gap:10px;}
+      .btn{width:100%; justify-content:center; padding:14px 16px;}
+      form{display:grid; grid-template-columns:1fr auto; gap:10px;}
+      form .btn{width:auto;}
+      input[type=email]{width:100%;}
+      .grid{grid-template-columns:1fr;}
+      .timeline{grid-template-columns:1fr;}
+      .step{padding:16px;}
+      footer .wrap{align-items:center !important; text-align:center;}
+      footer .brand img{height:38px;}
+    }
+    @media (max-width:420px){
+      .brand img{height:50px;}
+      h1{font-size:clamp(28px,9vw,38px);}
+      .hero-right{min-height:62vw;}
+      form{grid-template-columns:1fr;}
     }
   </style>
 </head>
@@ -157,7 +193,6 @@
   </header>
 
   <main class="wrap">
-    <!-- HERO -->
     <section class="hero" data-fade>
       <div>
         <h1>Invertí en <span class="accent">goles</span>, ganá con talento.</h1>
@@ -169,8 +204,6 @@
           <a class="btn primary" href="#waitlist">Unirme a la lista de espera</a>
           <a class="btn ghost" href="#contacto">Contacto</a>
         </div>
-
-        <!-- FORM -->
         <form action="https://formsubmit.co/el/fufahu" method="POST" id="waitlist">
           <input type="hidden" name="_subject" value="Nuevo registro Tokgol" />
           <input type="hidden" name="_captcha" value="false" />
@@ -179,11 +212,9 @@
           <button class="btn primary" type="submit">Anotarme</button>
         </form>
       </div>
-
       <div class="hero-right" aria-label="Vista previa estilo Tokgol"></div>
     </section>
 
-    <!-- FEATURES -->
     <section class="section" id="features" data-fade>
       <div class="grid">
         <div class="card">
@@ -204,33 +235,20 @@
       </div>
     </section>
 
-    <!-- ROADMAP -->
     <section class="section" id="roadmap" data-fade>
       <h2 style="font-family:Sora,Inter,sans-serif; margin:0 0 16px; font-size:28px;">Hoja de ruta</h2>
       <p class="muted" style="margin:0 0 18px">Plan tentativo de desarrollo y salida a mercado.</p>
       <div class="timeline">
-        <div class="step">
-          <div><span class="dot"></span><strong>Q3 2025</strong></div>
-          <div class="muted">Definición de MVP, diseño de experiencia y arquitectura inicial.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q4 2025</strong></div>
-          <div class="muted">Desarrollo del MVP y validaciones con primeros usuarios.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q1 2026</strong></div>
-          <div class="muted">Pilotos controlados con clubes y agentes aliados.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q2 2026</strong></div>
-          <div class="muted">Lanzamiento progresivo y expansión por mercados prioritarios.</div>
-        </div>
+        <div class="step"><div><span class="dot"></span><strong>Q3 2025</strong></div><div class="muted">Definición de MVP y arquitectura inicial.</div></div>
+        <div class="step"><div><span class="dot"></span><strong>Q4 2025</strong></div><div class="muted">Desarrollo del MVP y validaciones.</div></div>
+        <div class="step"><div><span class="dot"></span><strong>Q1 2026</strong></div><div class="muted">Pilotos con clubes y agentes aliados.</div></div>
+        <div class="step"><div><span class="dot"></span><strong>Q2 2026</strong></div><div class="muted">Lanzamiento progresivo y expansión regional.</div></div>
       </div>
     </section>
   </main>
 
   <footer id="contacto">
-    <div class="wrap" style="display:flex; flex-direction:column; gap:12px; align-items:flex-start">
+    <div class="wrap" style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
       <div class="brand"><img src="assets/tokgol-logo-dark.png" alt="TOKGOL" /></div>
       <div class="muted">Contacto: <a href="mailto:ml@tokgol.com">ml@tokgol.com</a> — Tel: +595 981 524 777</div>
       <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados.</small>
@@ -238,10 +256,7 @@
   </footer>
 
   <script>
-    // Año dinámico
     document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Fade-in on scroll
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
