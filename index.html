@@ -3,338 +3,161 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TOKGOL — Invertí en goles, ganá con talento</title>
-  <meta name="description" content="Tokgol está construyendo una plataforma para invertir en talento futbolístico. Únete a la lista de espera del MVP." />
+
+  <title>TOKGOL — Site under construction</title>
+  <meta name="description" content="Tokgol — Site under construction. MVP soon." />
+  <meta name="robots" content="noindex,nofollow" />
 
   <!-- Open Graph / Twitter -->
-  <meta property="og:title" content="TOKGOL — Invertí en goles, ganá con talento" />
-  <meta property="og:description" content="Conectamos inversores con talento futbolístico, con transparencia y trazabilidad." />
+  <meta property="og:title" content="TOKGOL — Site under construction" />
+  <meta property="og:description" content="MVP soon. ¿Querés saber más? ml@tokgol.com" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/assets/tokgol-logo-vertical.png" />
+  <meta property="og:image" content="/assets/tokgol-logo-dark.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="TOKGOL — Invertí en goles, ganá con talento" />
-  <meta name="twitter:description" content="Conectamos inversores con talento futbolístico, con transparencia y trazabilidad." />
-  <meta name="twitter:image" content="/assets/tokgol-logo-vertical.png" />
-  <meta name="theme-color" content="#A6FF4D" />
 
-  <!-- Favicon -->
+  <!-- Favicon (si tenés) -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 
-  <!-- Fonts -->
+  <!-- Fuente: Inter -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      /* Paleta Tokgol */
-      --bg:#0b0b0c;
-      --panel:#101114;
-      --soft:#14161a;
-      --text:#f2f4f5;
-      --muted:#aab0b6;
-      --ink:#0c0d10;
-      --fluor:#A6FF4D;
-      --fluor-2:#7CF05A;
-      --ring:1px solid rgba(255,255,255,.06);
-      --radius:16px;
-      --shadow:0 20px 80px rgba(0,0,0,.55);
+      --bg:#0b0c0e;         /* base oscura */
+      --fluor:#A6FF4D;      /* verde Tokgol */
+      --text:#f5f7f8;       /* texto principal */
+      --muted:#aeb5bd;      /* texto secundario */
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
-      color:var(--text); line-height:1.55; letter-spacing:.2px;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color:var(--text);
       background:
-        radial-gradient(120% 120% at 110% -10%, rgba(166,255,77,.35) 0%, rgba(166,255,77,0) 55%),
-        radial-gradient(80% 110% at -10% 30%, rgba(124,240,90,.28) 0%, rgba(124,240,90,0) 60%),
-        linear-gradient(160deg, #B8FF60 0%, #9BFF5B 35%, #84F35A 65%, #6DE55A 100%),
-        repeating-linear-gradient(135deg, rgba(0,0,0,.05) 0 10px, rgba(0,0,0,0) 10px 22px);
-      background-blend-mode: screen, screen, normal, overlay;
-      overflow-x:hidden;
+        radial-gradient(1400px 800px at 90% -10%, rgba(166,255,77,.18), transparent 60%),
+        radial-gradient(1200px 900px at -10% 20%, rgba(166,255,77,.10), transparent 55%),
+        var(--bg);
+      overflow:hidden;
     }
 
-    a{color:var(--text); text-decoration:none}
-    .wrap{max-width:1200px; margin:0 auto; padding:28px 20px}
-
-    /* ===== HEADER ===== */
-    header{
-      position:sticky; top:0; z-index:20;
-      backdrop-filter:saturate(120%) blur(10px);
-      background:linear-gradient(180deg, rgba(16,17,20,.85), rgba(16,17,20,.55) 60%, transparent);
-      border-bottom:1px solid rgba(255,255,255,.06)
+    /* Contenedor centrado */
+    .wrap{
+      position:relative;
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      isolation:isolate; /* to layer watermark behind */
     }
-    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
-    .brand{display:flex; align-items:center; gap:12px}
-    /* Logo grande, sin fondo y responsivo */
-.brand img{
-  /* usa clamp para que nunca quede minúsculo ni gigante */
-  height: clamp(88px, 10vw, 140px);
-  max-height: 22vh;
-  display:block;
-  margin: 10px 0;
-  object-fit: contain;
-  filter: brightness(1.12) contrast(1.06);
-  transition: transform .25s ease, filter .25s ease;
-}
-.brand img:hover{ transform:scale(1.03); filter:brightness(1.2) contrast(1.1) }
 
-/* opcional: achica header para que no aporte “altura extra” visual */
-header .wrap{ padding-top: 14px; padding-bottom: 12px; }
-}
+    /* Marca de agua con el logo */
+    .wrap::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(800px 800px at 70% 20%, rgba(0,0,0,.45), transparent 60%),
+        url("/assets/tokgol-logo-dark.png") center/ min(78vmin, 820px) no-repeat;
+      opacity:.10;          /* fuerza de la marca de agua */
+      filter: saturate(120%) contrast(110%);
+      z-index:-1;
+    }
 
-    /* ===== HERO ===== */
-    .hero{
-      display:grid; grid-template-columns:1.12fr .88fr; gap:36px; align-items:center; padding:58px 0 26px
+    /* Tarjeta */
+    .card{
+      max-width:920px;
+      width:100%;
+      border-radius:20px;
+      padding: clamp(24px, 5vw, 48px);
+      border:1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: 0 30px 120px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.03);
+      backdrop-filter: blur(6px) saturate(110%);
+      animation: pop .6s cubic-bezier(.22,.61,.36,1);
     }
-    .kicker{
-      display:inline-flex; align-items:center; gap:8px;
-      border:1px solid rgba(166,255,77,.35); color:#0b0b0c; background:var(--fluor);
-      border-radius:999px; padding:6px 12px; font-weight:700;
-      box-shadow:0 0 44px rgba(166,255,77,.28)
+    @keyframes pop{
+      from{opacity:0; transform:translateY(10px) scale(.985)}
+      to{opacity:1; transform:translateY(0) scale(1)}
     }
-    .kicker .dot{width:8px; height:8px; border-radius:999px; background:#0b0b0c}
+
+    .brand{
+      display:flex; align-items:center; gap:14px; margin-bottom: 14px;
+    }
+    .brand img{
+      height: clamp(40px, 8vmin, 68px);
+      display:block;
+      object-fit:contain;
+      filter: brightness(1.05) contrast(1.05);
+    }
+    .tag{
+      display:inline-block;
+      background: var(--fluor);
+      color:#0b0c0e;
+      font-weight:800;
+      font-size:12px;
+      border-radius:999px;
+      padding:6px 10px;
+      letter-spacing:.3px;
+    }
 
     h1{
-      font-family:Sora, Inter, ui-sans-serif; font-weight:800;
-      font-size: clamp(38px, 5.2vw, 68px); line-height:1.04; margin:16px 0 10px; letter-spacing:.1px
+      font-weight:800;
+      font-size: clamp(28px, 5.6vw, 56px);
+      line-height:1.08;
+      margin:10px 0 6px;
+      letter-spacing:.2px;
     }
-    /* Mejor contraste para “goles” */
-.accent{
-  color: #EFFF9C;             /* más claro que antes */
-  text-shadow:
-    0 0 2px rgba(0,0,0,.35),  /* borde oscuro fino */
-    0 2px 10px rgba(0,0,0,.30),
-    0 10px 36px rgba(166,255,77,.50);
-    }
-    .hdesc{font-size: clamp(16px, 2.4vw, 18px); color:var(--muted); max-width:60ch}
+    .muted{ color:var(--muted); font-size: clamp(15px, 2.6vw, 18px); }
 
-    .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+    .cta{
+      margin-top:22px; display:flex; gap:12px; flex-wrap:wrap;
+    }
     .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:14px 18px; border-radius:12px; font-weight:800;
-      letter-spacing:.2px; transition:transform .1s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:14px 18px; border-radius:12px; font-weight:800; letter-spacing:.2px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03); color:var(--text); text-decoration:none;
+      transition: transform .12s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
-    .btn.primary{background:linear-gradient(180deg, var(--fluor), var(--fluor-2)); color:#0a0a0b; box-shadow:0 10px 22px rgba(166,255,77,.22)}
-    .btn.primary:hover{transform:translateY(-1px); box-shadow:0 16px 28px rgba(166,255,77,.32)}
-    .btn.ghost{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.02)}
-    .btn.ghost:hover{background:rgba(255,255,255,.05)}
+    .btn.primary{
+      background: linear-gradient(180deg, var(--fluor), #7CF05A);
+      color:#0b0c0e; box-shadow: 0 12px 26px rgba(166,255,77,.22);
+      border-color: transparent;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn.primary:hover{ box-shadow: 0 18px 32px rgba(166,255,77,.32); }
 
-    /* Panel visual (gradiente + imagen blur con fade-in) */
-    .hero-right{
-      position:relative;
-      min-height: clamp(260px, 36vw, 520px);
-      border-radius: 18px;
-      overflow:hidden;
-      background-image:
-        radial-gradient(120% 120% at 100% 0%, rgba(166,255,77,0.22) 0%, rgba(10,10,12,0.0) 45%),
-        linear-gradient(160deg, #0e1216 0%, #0b1112 45%, #07150e 100%);
-      background-size: cover, cover; background-position: center, center; background-repeat:no-repeat;
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:var(--shadow), inset 0 0 0 1px rgba(255,255,255,.03);
-    }
-    .hero-right::before{
-      content:""; position:absolute; inset:0; z-index:0;
-      background-image: image-set(
-        url("/assets/hero-app-blur.webp") type("image/webp") 1x,
-        url("/assets/hero-app-blur.jpg")  type("image/jpeg") 1x
-      );
-      background-size: cover; background-position:center; background-repeat:no-repeat;
-      opacity:0; transform:scale(1.02);
-      filter:saturate(110%) contrast(105%);
-      animation: heroFade .8s ease forwards .1s;
-    }
-    .hero-right::after{
-      content:""; position:absolute; inset:0; z-index:1;
-      background:
-        radial-gradient(80% 60% at 80% 20%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 60%),
-        linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.35) 100%);
-      mix-blend-mode: overlay; pointer-events:none;
-    }
-    @keyframes heroFade{
-      from{opacity:0; transform:scale(1.02)}
-      to  {opacity:.92; transform:scale(1.00)}
-    }
-    @media (prefers-reduced-motion: reduce){
-      .hero-right::before{animation:none; opacity:.92}
-    }
-
-    /* ===== Secciones ===== */
-    .section{padding:64px 0}
-    .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px}
-    .card{
-      border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-      border:1px solid rgba(255,255,255,.06); padding:24px; position:relative
-    }
-    .card:after{content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; box-shadow:0 0 44px rgba(166,255,77,.18)}
-    .card h3{margin:6px 0 6px; font-family:Sora, Inter, ui-sans-serif}
-    .eyebrow{font-size:12px; letter-spacing:.35px; color:var(--fluor); font-weight:800; text-transform:uppercase}
-    .muted{color:var(--muted)}
-
-    .timeline{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
-    .step{padding:20px; background:var(--soft); border-radius:14px; border:1px solid rgba(255,255,255,.06)}
-    .step .dot{width:10px; height:10px; border-radius:999px; background:var(--fluor); display:inline-block; box-shadow:0 0 14px rgba(166,255,77,.9); margin-right:8px}
-
-    /* Waitlist form */
-    form{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    input[type=email]{
-      background:#0d0e12; border:1px solid rgba(255,255,255,.1); color:var(--text);
-      padding:14px 14px; border-radius:12px; min-width:260px; outline:none
-    }
-    input[type=email]::placeholder{color:#97a0a8}
-    input[type=email]:focus{border-color:rgba(166,255,77,.55); box-shadow:0 0 0 4px rgba(166,255,77,.16)}
-
-    /* ===== FOOTER (verde para consistencia) ===== */
     footer{
-      border-top:1px solid rgba(255,255,255,.06);
-      background:linear-gradient(180deg, rgba(16,17,20,.25), rgba(16,17,20,.55)),
-                 linear-gradient(160deg, #B8FF60 0%, #84F35A 65%, #6DE55A 100%);
-      padding:36px 0 60px
-    }
-    .foot{display:flex; flex-direction:column; gap:14px; color:var(--muted)}
-    .foot .brand{gap:12px}
-    .foot .brand img{height:140px; display:block; filter:brightness(1.15) contrast(1.08)}
-
-    /* Responsive */
-    @media (max-width: 1040px){ .brand img{height:150px} }
-    @media (max-width: 960px){
-      .hero{grid-template-columns:1fr; padding-top:28px}
-      .grid{grid-template-columns:1fr}
-      .timeline{grid-template-columns:1fr;}
-      .foot .brand{flex-direction:row}
-      .brand img{height:120px}
-    }
-    @media (max-width: 560px){
-      .brand img{height:100px}
-      .tag{display:none}
+      margin-top:18px; color:var(--muted); font-size:14px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap nav">
-      <div class="brand" aria-label="Tokgol">
-        <!-- Logo sin fondo (oscuro) -->
-      <img src="/assets/tokgol-logo-dark.png?v=3" alt="TOKGOL" width="560" height="180" />
-      </div>
-      <div class="tag">Sitio en desarrollo</div>
-    </div>
-  </header>
-
   <main class="wrap">
-    <section class="hero">
-      <div>
-        <span class="kicker"><span class="dot"></span> Próximamente</span>
-        <h1>Invertí en <span class="accent">goles</span>, ganá con talento.</h1>
-        <p class="hdesc">
-          Estamos construyendo una plataforma para conectar a inversores con carreras de futbolistas prometedores,
-          con trazabilidad y una experiencia de clase mundial. Únite para recibir las novedades del MVP.
-        </p>
-        <div class="cta">
-          <a class="btn primary" href="#waitlist">Unirme a la lista de espera</a>
-          <a class="btn ghost" href="#roadmap">Ver hoja de ruta</a>
-          <a class="btn ghost" href="mailto:ml@tokgol.com">Contacto</a>
-        </div>
+    <section class="card" aria-label="Tokgol — Under construction">
+      <div class="brand">
+        <!-- Logo con transparencia -->
+        <img src="/assets/tokgol-logo-dark.png" alt="TOKGOL" width="560" height="180">
+        <span class="tag">Under construction</span>
       </div>
 
-      <!-- Panel derecho: gradiente + imagen blur con fade-in -->
-      <div class="hero-right" aria-label="Vista previa estilo Tokgol"></div>
-    </section>
+      <h1>Site under construction!<br>MVP soon 🚧</h1>
+      <p class="muted">¿Querés saber más o estar al tanto del lanzamiento?</p>
 
-    <section class="section" id="features">
-      <div class="grid">
-        <div class="card">
-          <div class="eyebrow">Transparencia</div>
-          <h3>Tokenización responsable</h3>
-          <p class="muted">Estructuras claras orientadas a la protección del inversor y del jugador, con procesos de cumplimiento integrados.</p>
-        </div>
-        <div class="card">
-          <div class="eyebrow">Tecnología</div>
-          <h3>Arquitectura preparada para escalar</h3>
-          <p class="muted">Infra moderna, integraciones seguras y una experiencia simple para operar desde cualquier lugar.</p>
-        </div>
-        <div class="card">
-          <div class="eyebrow">Comunidad</div>
-          <h3>Alianzas y acceso</h3>
-          <p class="muted">Conectamos clubes, talentos y capital a través de una comunidad global con foco en LATAM.</p>
-        </div>
+      <div class="cta">
+        <a class="btn primary" href="mailto:ml@tokgol.com">Escribime a ml@tokgol.com</a>
+        <a class="btn" href="mailto:ml@tokgol.com?subject=Quiero%20saber%20m%C3%A1s%20del%20MVP%20de%20Tokgol&body=Hola%2C%20me%20interesa%20saber%20m%C3%A1s.">Quiero saber más</a>
       </div>
-    </section>
 
-    <section class="section" id="waitlist">
-      <div class="card" style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
-        <div style="display:flex; align-items:center; gap:10px">
-          <span class="eyebrow">Únite</span><span class="muted">— Recibí avances del MVP</span>
-        </div>
-        <form action="https://formsubmit.co/el/fufahu" method="POST">
-          <input type="hidden" name="_subject" value="Nuevo registro a la waitlist de Tokgol" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_next" value="/thanks.html" />
-          <label for="email" class="visually-hidden">Correo</label>
-          <input id="email" name="email" type="email" placeholder="tu@email.com" required>
-          <button class="btn primary" type="submit">Anotarme</button>
-        </form>
-        <small class="muted">Prometemos no hacer spam. Podrás desuscribirte cuando quieras.</small>
-      </div>
-    </section>
-
-    <section class="section" id="roadmap">
-      <div class="timeline">
-        <div class="step">
-          <div><span class="dot"></span><strong>Q3 2025</strong></div>
-          <div class="muted">Definición de MVP, diseño de experiencia y arquitectura inicial.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q4 2025</strong></div>
-          <div class="muted">Desarrollo del MVP y validaciones con primeros usuarios.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q1 2026</strong></div>
-          <div class="muted">Pilotos controlados con clubes y agentes aliados.</div>
-        </div>
-        <div class="step">
-          <div><span class="dot"></span><strong>Q2 2026</strong></div>
-          <div class="muted">Lanzamiento progresivo y expansión por mercados prioritarios.</div>
-        </div>
-      </div>
+      <footer>© <span id="y"></span> Tokgol</footer>
     </section>
   </main>
 
-  <footer>
-    <div class="wrap foot">
-      <div class="brand" aria-label="Tokgol">
-        <img src="/assets/tokgol-logo-dark.png" alt="TOKGOL" width="420" height="140" />
-      </div>
-      <div class="contact">
-        <span>Contacto:</span>
-        <a href="tel:+595981524777">Teléfono: +595 981 524 777</a>
-        <span>·</span>
-        <a href="mailto:ml@tokgol.com">ml@tokgol.com</a>
-      </div>
-      <small class="muted">© <span id="year"></span> Tokgol. Todos los derechos reservados. — Sitio en desarrollo.</small>
-    </div>
-  </footer>
-
   <script>
-    // Año en footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Apariciones suaves
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          e.target.animate(
-            [{opacity:0, transform:'translateY(14px)'},{opacity:1, transform:'translateY(0)'}],
-            {duration:600, easing:'cubic-bezier(.22,.61,.36,1)', fill:'forwards'}
-          );
-          observer.unobserve(e.target);
-        }
-      })
-    }, {threshold:.12});
-    document.querySelectorAll('.card, .step, .hero > div:first-child').forEach(el=>observer.observe(el));
+    document.getElementById('y').textContent = new Date().getFullYear();
   </script>
+
+  <noscript>Tokgol — Site under construction. MVP soon. Contacto: ml@tokgol.com</noscript>
 </body>
 </html>
