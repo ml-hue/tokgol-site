@@ -68,16 +68,21 @@
     .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
     .brand{display:flex; align-items:center; gap:12px}
     /* Logo grande, sin fondo y responsivo */
-    .brand img{
-      height:180px; max-height:22vh; display:block;
-      margin:8px 0; filter:brightness(1.15) contrast(1.08);
-      transition:transform .25s ease, filter .25s ease;
-    }
-    .brand img:hover{ transform:scale(1.03); filter:brightness(1.25) contrast(1.12) }
-    .tag{
-      font-size:12px; color:var(--ink); border:1px solid rgba(0,0,0,.08);
-      padding:6px 10px; border-radius:999px; background:var(--fluor); font-weight:700
-    }
+.brand img{
+  /* usa clamp para que nunca quede minúsculo ni gigante */
+  height: clamp(88px, 10vw, 140px);
+  max-height: 22vh;
+  display:block;
+  margin: 10px 0;
+  object-fit: contain;
+  filter: brightness(1.12) contrast(1.06);
+  transition: transform .25s ease, filter .25s ease;
+}
+.brand img:hover{ transform:scale(1.03); filter:brightness(1.2) contrast(1.1) }
+
+/* opcional: achica header para que no aporte “altura extra” visual */
+header .wrap{ padding-top: 14px; padding-bottom: 12px; }
+}
 
     /* ===== HERO ===== */
     .hero{
@@ -96,11 +101,12 @@
       font-size: clamp(38px, 5.2vw, 68px); line-height:1.04; margin:16px 0 10px; letter-spacing:.1px
     }
     /* Mejor contraste para “goles” */
-    .accent{
-      color:#d9ff8b;
-      text-shadow:
-        0 0 10px rgba(0,0,0,.25),
-        0 6px 36px rgba(166,255,77,.45);
+.accent{
+  color: #EFFF9C;             /* más claro que antes */
+  text-shadow:
+    0 0 2px rgba(0,0,0,.35),  /* borde oscuro fino */
+    0 2px 10px rgba(0,0,0,.30),
+    0 10px 36px rgba(166,255,77,.50);
     }
     .hdesc{font-size: clamp(16px, 2.4vw, 18px); color:var(--muted); max-width:60ch}
 
@@ -211,7 +217,7 @@
     <div class="wrap nav">
       <div class="brand" aria-label="Tokgol">
         <!-- Logo sin fondo (oscuro) -->
-        <img src="/assets/tokgol-logo-dark.png" alt="TOKGOL" width="560" height="180" />
+      <img src="/assets/tokgol-logo-dark.png?v=3" alt="TOKGOL" width="560" height="180" />
       </div>
       <div class="tag">Sitio en desarrollo</div>
     </div>
