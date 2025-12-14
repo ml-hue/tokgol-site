@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Notes a Bitácora - Tokgol</title>
+  <style>
+    :root {
+      --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: var(--bg);
+    }
+
+    #root {
+      min-height: 100vh;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module">
+    import React, { useEffect, useState } from 'https://esm.sh/react@18.3.1';
+    import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client';
+    import {
+      FileText,
+      Upload,
+      Download,
+      CheckCircle,
+      AlertCircle,
+      Trash2,
+      Loader
+    } from 'https://esm.sh/lucide-react@0.421.0';
+    import * as XLSX from 'https://esm.sh/xlsx@0.18.5';
+
+    const PHASES = [
+      { id: 1, label: 'Diagnóstico' },
+      { id: 2, label: 'Plan estratégico' },
+      { id: 3, label: 'Implementación' },
+      { id: 4, label: 'Seguimiento & control' }
+    ];
+
+    function NotesToBitacora() {
+      const [pdfs, setPdfs] = useState([]);
+      const [extractedData, setExtractedData] = useState(null);
+      const [processing, setProcessing] = useState(false);
+      const [activeTab, setActiveTab] = useState('upload');
+      const [loadingPdf, setLoadingPdf] = useState(false);
+
+      useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+        script.async = true;
+        script.onload = () => {
+          if (window.pdfjsLib) {
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+              'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            setLoadingPdf(false);
+          }
+        };
+        document.body.appendChild(script);
+        setLoadingPdf(true);
+
+        return () => {
+          document.body.removeChild(script);
+        };
+      }, []);
+
+      const handleFileUpload = async (e) => {
+        const files = Array.from(e.target.files || []);
+
+        if (files.length === 0) return;
+
+        setProcessing(true);
+
+        try {
+          const processedFiles = await Promise.all(
+            files.map(async (file) => {
+              const text = await extractTextFromPDF(file);
+              return { name: file.name, text, file };
+            })
+          );
+
+          setPdfs(processedFiles);
+          const structured = parseNotesToStructure(processedFiles);
+          setExtractedData(structured);
+          setActiveTab('review');
+        } catch (error) {
+          console.error('Error procesando archivos:', error);
+          alert('Error procesando los archivos. Verifica que sean PDFs válidos.');
+        } finally {
+          setProcessing(false);
+        }
+      };
+
+      const extractTextFromPDF = async (file) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+
+          reader.onload = async (event) => {
+            try {
+              if (!window.pdfjsLib) {
+                throw new Error('PDF.js no está cargado');
+              }
+
+              const typedarray = new Uint8Array(event.target.result);
+              const loadingTask = window.pdfjsLib.getDocument(typedarray);
+              const pdf = await loadingTask.promise;
+
+              let fullText = '';
+
+              for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const textContent = await page.getTextContent();
+                const pageText = textContent.items.map((item) => item.str).join(' ');
+                fullText += pageText + '\n\n';
+              }
+
+              resolve(fullText);
+            } catch (error) {
+              console.error('Error extrayendo texto del PDF:', error);
+              resolve('');
+            }
+          };
+
+          reader.onerror = () => {
+            reject(new Error('Error leyendo el archivo'));
+          };
+
+          reader.readAsArrayBuffer(file);
+        });
+      };
+
+      const parseNotesToStructure = (files) => {
+        const clients = [];
+        const sessions = [];
+        const projectPhases = [];
+
+        files.forEach((file, fileIndex) => {
+          const text = file.text;
+          const fileName = file.name.replace('.pdf', '');
+
+          const lines = text.split('\n').filter((l) => l.trim());
+          const clientName = lines[0]?.trim() || fileName;
+
+          const clientId = `client_${fileIndex + 1}`;
+          clients.push({
+            client_id: clientId,
+            client_name: clientName,
+            organization: '',
+            partner: '',
+            industry: '',
+            country: 'Paraguay',
+            status: 'active'
+          });
+
+          const datePattern = /(\d{1,2}[-/]\d{1,2}[-/]\d{2,4})|(\d{4}[-/]\d{1,2}[-/]\d{1,2})/g;
+          const sessionBlocks = text.split(/(?=\d{1,2}[-/]\d{1,2}[-/]\d{2,4})/);
+
+          sessionBlocks.forEach((block, idx) => {
+            const dateMatch = block.match(datePattern);
+            if (dateMatch && block.length > 50) {
+              const sessionDate = parseDate(dateMatch[0]);
+              const sessionText = block.replace(dateMatch[0], '').trim();
+
+              const sessionLines = sessionText.split('\n').filter((l) => l.trim());
+              const title = sessionLines[0]?.substring(0, 200) || `Sesión ${idx + 1}`;
+
+              const phase = detectPhase(sessionText);
+
+              sessions.push({
+                session_id: `session_${fileIndex}_${idx}`,
+                project_id: clientId,
+                session_date: sessionDate,
+                stage: PHASES[phase - 1]?.label || 'Diagnóstico',
+                participants: extractParticipants(sessionText),
+                key_topics: sessionLines.slice(0, 3).join('. ').substring(0, 500),
+                next_steps: extractNextSteps(sessionText),
+                title: title,
+                summary: sessionLines.join(' ').substring(0, 1000),
+                client_status: 'realizado'
+              });
+            }
+          });
+
+          const latestPhase = sessions
+            .filter((s) => s.project_id === clientId)
+            .reduce((max, s) => {
+              const phaseNum = PHASES.findIndex((p) => p.label === s.stage) + 1;
+              return Math.max(max, phaseNum);
+            }, 1);
+
+          projectPhases.push({
+            project_name: clientName,
+            current_phase: latestPhase
+          });
+        });
+
+        return { clients, sessions, projectPhases };
+      };
+
+      const detectPhase = (text) => {
+        const lower = text.toLowerCase();
+        if (lower.includes('seguimiento') || lower.includes('control') || lower.includes('monitoreo')) return 4;
+        if (lower.includes('implementacion') || lower.includes('implementación') || lower.includes('ejecucion')) return 3;
+        if (lower.includes('plan') || lower.includes('estrategia') || lower.includes('planificacion')) return 2;
+        if (lower.includes('diagnostico') || lower.includes('diagnóstico') || lower.includes('relevamiento')) return 1;
+        return 1;
+      };
+
+      const parseDate = (dateStr) => {
+        const formats = [
+          /(\d{1,2})[-/](\d{1,2})[-/](\d{4})/,
+          /(\d{1,2})[-/](\d{1,2})[-/](\d{2})/,
+          /(\d{4})[-/](\d{1,2})[-/](\d{1,2})/
+        ];
+
+        for (let format of formats) {
+          const match = dateStr.match(format);
+          if (match) {
+            let year, month, day;
+            if (format === formats[2]) {
+              [, year, month, day] = match;
+            } else {
+              [, day, month, year] = match;
+              if (year.length === 2) year = '20' + year;
+            }
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+          }
+        }
+        return new Date().toISOString().split('T')[0];
+      };
+
+      const extractParticipants = (text) => {
+        const lines = text.split('\n');
+        const participantLine = lines.find(
+          (l) =>
+            l.toLowerCase().includes('participantes') ||
+            l.toLowerCase().includes('presentes') ||
+            l.toLowerCase().includes('asistentes')
+        );
+        return participantLine ? participantLine.split(':')[1]?.trim() || '' : '';
+      };
+
+      const extractNextSteps = (text) => {
+        const lines = text.split('\n');
+        const nextStepsIndex = lines.findIndex(
+          (l) =>
+            l.toLowerCase().includes('proximos pasos') ||
+            l.toLowerCase().includes('próximos pasos') ||
+            l.toLowerCase().includes('acuerdos') ||
+            l.toLowerCase().includes('tareas')
+        );
+
+        if (nextStepsIndex !== -1) {
+          return lines.slice(nextStepsIndex + 1, nextStepsIndex + 5).join('. ').substring(0, 500);
+        }
+        return '';
+      };
+
+      const exportToExcel = () => {
+        if (!extractedData) return;
+
+        const clientsWS = XLSX.utils.json_to_sheet(extractedData.clients);
+        const clientsWB = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(clientsWB, clientsWS, 'Clientes');
+        XLSX.writeFile(clientsWB, 'clientes.xlsx');
+
+        const sessionsWS = XLSX.utils.json_to_sheet(extractedData.sessions);
+        const sessionsWB = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(sessionsWB, sessionsWS, 'Sesiones');
+        XLSX.writeFile(sessionsWB, 'sesiones.xlsx');
+
+        const phasesWS = XLSX.utils.json_to_sheet(extractedData.projectPhases);
+        const phasesWB = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(phasesWB, phasesWS, 'Fases');
+        XLSX.writeFile(phasesWB, 'fases_proyectos.xlsx');
+
+        alert('Archivos Excel exportados correctamente');
+      };
+
+      const updateClient = (clientId, field, value) => {
+        setExtractedData((prev) => ({
+          ...prev,
+          clients: prev.clients.map((c) => (c.client_id === clientId ? { ...c, [field]: value } : c))
+        }));
+      };
+
+      const updateSession = (sessionId, field, value) => {
+        setExtractedData((prev) => ({
+          ...prev,
+          sessions: prev.sessions.map((s) => (s.session_id === sessionId ? { ...s, [field]: value } : s))
+        }));
+      };
+
+      const deleteSession = (sessionId) => {
+        if (window.confirm('Eliminar esta sesión?')) {
+          setExtractedData((prev) => ({
+            ...prev,
+            sessions: prev.sessions.filter((s) => s.session_id !== sessionId)
+          }));
+        }
+      };
+
+      if (loadingPdf) {
+        return (
+          <div
+            style={{
+              minHeight: '100vh',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <div style={{ background: 'white', borderRadius: '16px', padding: '3rem', textAlign: 'center' }}>
+              <Loader size={48} color="#667eea" style={{ animation: 'spin 1s linear infinite' }} />
+              <div style={{ marginTop: '1rem', fontSize: '1.25rem', color: '#1a202c' }}>
+                Cargando procesador de PDF...
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div
+          style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', padding: '2rem' }}
+        >
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            <div
+              style={{
+                background: 'white',
+                borderRadius: '16px',
+                padding: '2rem',
+                marginBottom: '2rem',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
+                <FileText size={32} color="#667eea" />
+                <h1 style={{ margin: 0, fontSize: '2rem', color: '#1a202c' }}>
+                  Importador Notes a Bitácora Supabase
+                </h1>
+              </div>
+              <p style={{ margin: 0, color: '#718096', fontSize: '1rem' }}>
+                Convierte tus notas de sesiones en datos estructurados para tu Bitácora de Clientes
+              </p>
+            </div>
+
+            <div
+              style={{
+                background: 'white',
+                borderRadius: '16px',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                overflow: 'hidden'
+              }}
+            >
+              <div style={{ display: 'flex', borderBottom: '2px solid #e2e8f0' }}>
+                <button
+                  onClick={() => setActiveTab('upload')}
+                  style={{
+                    flex: 1,
+                    padding: '1rem',
+                    border: 'none',
+                    background: activeTab === 'upload' ? '#667eea' : 'transparent',
+                    color: activeTab === 'upload' ? 'white' : '#4a5568',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer'
+                  }}
+                >
+                  1. Subir PDFs
+                </button>
+                <button
+                  onClick={() => setActiveTab('review')}
+                  disabled={!extractedData}
+                  style={{
+                    flex: 1,
+                    padding: '1rem',
+                    border: 'none',
+                    background: activeTab === 'review' ? '#667eea' : 'transparent',
+                    color: activeTab === 'review' ? 'white' : '#4a5568',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: extractedData ? 'pointer' : 'not-allowed',
+                    opacity: extractedData ? 1 : 0.5
+                  }}
+                >
+                  2. Revisar datos
+                </button>
+                <button
+                  onClick={() => setActiveTab('export')}
+                  disabled={!extractedData}
+                  style={{
+                    flex: 1,
+                    padding: '1rem',
+                    border: 'none',
+                    background: activeTab === 'export' ? '#667eea' : 'transparent',
+                    color: activeTab === 'export' ? 'white' : '#4a5568',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: extractedData ? 'pointer' : 'not-allowed',
+                    opacity: extractedData ? 1 : 0.5
+                  }}
+                >
+                  3. Exportar Excel
+                </button>
+              </div>
+
+              <div style={{ padding: '2rem' }}>
+                {activeTab === 'upload' && (
+                  <div>
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#1a202c' }}>
+                      Paso 1: Exporta y sube tus notas
+                    </h2>
+
+                    <div
+                      style={{
+                        background: '#ebf4ff',
+                        border: '1px solid #bee3f8',
+                        borderRadius: '8px',
+                        padding: '1rem',
+                        marginBottom: '2rem'
+                      }}
+                    >
+                      <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem', color: '#2c5282' }}>
+                        Como exportar desde Notes (macOS):
+                      </h3>
+                      <ol style={{ margin: 0, paddingLeft: '1.5rem', color: '#2d3748' }}>
+                        <li>Abri Notes en tu Mac</li>
+                        <li>Selecciona las notas de cada cliente</li>
+                        <li>Ve a Archivo - Exportar como PDF</li>
+                        <li>Guarda un PDF por proyecto</li>
+                        <li>Sube todos los PDFs aqui abajo</li>
+                      </ol>
+                    </div>
+
+                    <div
+                      style={{
+                        border: '3px dashed #cbd5e0',
+                        borderRadius: '12px',
+                        padding: '3rem',
+                        textAlign: 'center',
+                        background: processing ? '#f7fafc' : '#ffffff',
+                        cursor: processing ? 'wait' : 'pointer',
+                        opacity: processing ? 0.6 : 1
+                      }}
+                    >
+                      <input
+                        type="file"
+                        multiple
+                        accept=".pdf"
+                        onChange={handleFileUpload}
+                        disabled={processing}
+                        style={{ display: 'none' }}
+                        id="fileInput"
+                      />
+                      <label htmlFor="fileInput" style={{ cursor: processing ? 'wait' : 'pointer' }}>
+                        {processing ? (
+                          <>
+                            <Loader size={48} color="#667eea" style={{ marginBottom: '1rem', animation: 'spin 1s linear infinite' }} />
+                            <div
+                              style={{ fontSize: '1.25rem', fontWeight: '600', color: '#2d3748', marginBottom: '0.5rem' }}
+                            >
+                              Procesando PDFs...
+                            </div>
+                            <div style={{ color: '#718096' }}>Extrayendo texto y estructurando datos</div>
+                          </>
+                        ) : (
+                          <>
+                            <Upload size={48} color="#667eea" style={{ marginBottom: '1rem' }} />
+                            <div
+                              style={{ fontSize: '1.25rem', fontWeight: '600', color: '#2d3748', marginBottom: '0.5rem' }}
+                            >
+                              Subir PDFs de Notes
+                            </div>
+                            <div style={{ color: '#718096' }}>Selecciona múltiples archivos PDF</div>
+                          </>
+                        )}
+                      </label>
+                    </div>
+
+                    {pdfs.length > 0 && (
+                      <div style={{ marginTop: '2rem' }}>
+                        <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: '#1a202c' }}>
+                          Archivos procesados ({pdfs.length})
+                        </h3>
+                        <div style={{ display: 'grid', gap: '0.75rem' }}>
+                          {pdfs.map((pdf, idx) => (
+                            <div
+                              key={idx}
+                              style={{
+                                background: '#f7fafc',
+                                padding: '1rem',
+                                borderRadius: '8px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.75rem'
+                              }}
+                            >
+                              <CheckCircle size={20} color="#48bb78" />
+                              <span style={{ fontWeight: '500', color: '#2d3748' }}>{pdf.name}</span>
+                              <span style={{ marginLeft: 'auto', color: '#718096', fontSize: '0.875rem' }}>
+                                {Math.round(pdf.text.length / 1000)}k caracteres
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {activeTab === 'review' && extractedData && (
+                  <div>
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#1a202c' }}>
+                      Paso 2: Revisa y edita los datos extraídos
+                    </h2>
+
+                    <div style={{ marginBottom: '2rem' }}>
+                      <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: '#2d3748' }}>
+                        Clientes ({extractedData.clients.length})
+                      </h3>
+                      <div style={{ overflowX: 'auto' }}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
+                          <thead>
+                            <tr style={{ background: '#f7fafc', borderBottom: '2px solid #e2e8f0' }}>
+                              <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600' }}>Cliente</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600' }}>Organización</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600' }}>Partner</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600' }}>Industria</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600' }}>Fase</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {extractedData.clients.map((client) => {
+                              const phase = extractedData.projectPhases.find((p) => p.project_name === client.client_name);
+                              return (
+                                <tr key={client.client_id} style={{ borderBottom: '1px solid #e2e8f0' }}>
+                                  <td style={{ padding: '0.75rem' }}>
+                                    <input
+                                      type="text"
+                                      value={client.client_name}
+                                      onChange={(e) => updateClient(client.client_id, 'client_name', e.target.value)}
+                                      style={{
+                                        width: '100%',
+                                        padding: '0.5rem',
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '4px'
+                                      }}
+                                    />
+                                  </td>
+                                  <td style={{ padding: '0.75rem' }}>
+                                    <input
+                                      type="text"
+                                      value={client.organization}
+                                      onChange={(e) => updateClient(client.client_id, 'organization', e.target.value)}
+                                      placeholder="Empresa SA"
+                                      style={{
+                                        width: '100%',
+                                        padding: '0.5rem',
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '4px'
+                                      }}
+                                    />
+                                  </td>
+                                  <td style={{ padding: '0.75rem' }}>
+                                    <input
+                                      type="text"
+                                      value={client.partner}
+                                      onChange={(e) => updateClient(client.client_id, 'partner', e.target.value)}
+                                      placeholder="Juan Perez"
+                                      style={{
+                                        width: '100%',
+                                        padding: '0.5rem',
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '4px'
+                                      }}
+                                    />
+                                  </td>
+                                  <td style={{ padding: '0.75rem' }}>
+                                    <input
+                                      type="text"
+                                      value={client.industry}
+                                      onChange={(e) => updateClient(client.client_id, 'industry', e.target.value)}
+                                      placeholder="Tecnología"
+                                      style={{
+                                        width: '100%',
+                                        padding: '0.5rem',
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '4px'
+                                      }}
+                                    />
+                                  </td>
+                                  <td style={{ padding: '0.75rem' }}>
+                                    <span
+                                      style={{
+                                        background: '#667eea',
+                                        color: 'white',
+                                        padding: '0.25rem 0.75rem',
+                                        borderRadius: '12px',
+                                        fontSize: '0.75rem',
+                                        fontWeight: '600'
+                                      }}
+                                    >
+                                      Fase {phase?.current_phase}
+                                    </span>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: '#2d3748' }}>
+                        Sesiones ({extractedData.sessions.length})
+                      </h3>
+                      <div style={{ display: 'grid', gap: '1rem', maxHeight: '600px', overflowY: 'auto', padding: '0.5rem' }}>
+                        {extractedData.sessions.map((session) => (
+                          <div
+                            key={session.session_id}
+                            style={{
+                              background: '#f7fafc',
+                              borderRadius: '8px',
+                              padding: '1rem',
+                              border: '1px solid #e2e8f0'
+                            }}
+                          >
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                              <div style={{ flex: 1 }}>
+                                <input
+                                  type="text"
+                                  value={session.title}
+                                  onChange={(e) => updateSession(session.session_id, 'title', e.target.value)}
+                                  style={{
+                                    width: '100%',
+                                    padding: '0.5rem',
+                                    border: '1px solid #e2e8f0',
+                                    borderRadius: '4px',
+                                    fontSize: '1rem',
+                                    fontWeight: '600',
+                                    marginBottom: '0.5rem'
+                                  }}
+                                />
+                                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                                  <div>
+                                    <label
+                                      style={{
+                                        fontSize: '0.75rem',
+                                        color: '#718096',
+                                        display: 'block',
+                                        marginBottom: '0.25rem'
+                                      }}
+                                    >
+                                      Fecha
+                                    </label>
+                                    <input
+                                      type="date"
+                                      value={session.session_date}
+                                      onChange={(e) => updateSession(session.session_id, 'session_date', e.target.value)}
+                                      style={{ padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '4px' }}
+                                    />
+                                  </div>
+                                  <div>
+                                    <label
+                                      style={{
+                                        fontSize: '0.75rem',
+                                        color: '#718096',
+                                        display: 'block',
+                                        marginBottom: '0.25rem'
+                                      }}
+                                    >
+                                      Etapa
+                                    </label>
+                                    <select
+                                      value={session.stage}
+                                      onChange={(e) => updateSession(session.session_id, 'stage', e.target.value)}
+                                      style={{ padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '4px' }}
+                                    >
+                                      {PHASES.map((p) => (
+                                        <option key={p.id} value={p.label}>
+                                          {p.label}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </div>
+                                  <div>
+                                    <label
+                                      style={{
+                                        fontSize: '0.75rem',
+                                        color: '#718096',
+                                        display: 'block',
+                                        marginBottom: '0.25rem'
+                                      }}
+                                    >
+                                      Estado
+                                    </label>
+                                    <select
+                                      value={session.client_status}
+                                      onChange={(e) => updateSession(session.session_id, 'client_status', e.target.value)}
+                                      style={{ padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '4px' }}
+                                    >
+                                      <option value="realizado">Realizado</option>
+                                      <option value="postergado">Postergado</option>
+                                      <option value="no_realizado">No realizado</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => deleteSession(session.session_id)}
+                                style={{
+                                  background: '#fed7d7',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  padding: '0.5rem',
+                                  cursor: 'pointer',
+                                  marginLeft: '1rem',
+                                  height: 'fit-content'
+                                }}
+                              >
+                                <Trash2 size={16} color="#c53030" />
+                              </button>
+                            </div>
+                            <textarea
+                              value={session.summary}
+                              onChange={(e) => updateSession(session.session_id, 'summary', e.target.value)}
+                              rows={3}
+                              placeholder="Resumen de la sesión"
+                              style={{
+                                width: '100%',
+                                padding: '0.5rem',
+                                border: '1px solid #e2e8f0',
+                                borderRadius: '4px',
+                                fontSize: '0.875rem',
+                                resize: 'vertical'
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'export' && extractedData && (
+                  <div>
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#1a202c' }}>
+                      Paso 3: Exporta a Excel para Supabase
+                    </h2>
+
+                    <div
+                      style={{
+                        background: '#ebf4ff',
+                        border: '1px solid #bee3f8',
+                        borderRadius: '8px',
+                        padding: '1.5rem',
+                        marginBottom: '2rem'
+                      }}
+                    >
+                      <h3 style={{ fontSize: '1rem', marginBottom: '1rem', color: '#2c5282' }}>
+                        Archivos que se generarán:
+                      </h3>
+                      <div style={{ display: 'grid', gap: '0.75rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <CheckCircle size={20} color="#48bb78" />
+                          <strong>clientes.xlsx</strong> - {extractedData.clients.length} clientes
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <CheckCircle size={20} color="#48bb78" />
+                          <strong>sesiones.xlsx</strong> - {extractedData.sessions.length} sesiones
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <CheckCircle size={20} color="#48bb78" />
+                          <strong>fases_proyectos.xlsx</strong> - Estado de proyectos
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gap: '1rem', maxWidth: '520px' }}>
+                      <button
+                        onClick={exportToExcel}
+                        style={{
+                          padding: '1rem',
+                          background: '#48bb78',
+                          color: 'white',
+                          fontWeight: 700,
+                          border: 'none',
+                          borderRadius: '12px',
+                          cursor: 'pointer',
+                          fontSize: '1rem'
+                        }}
+                      >
+                        Exportar todo
+                      </button>
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+                        gap: '0.75rem'
+                      }}>
+                        <button
+                          onClick={() => {
+                            if (!extractedData) return;
+                            const clientsWS = XLSX.utils.json_to_sheet(extractedData.clients);
+                            const clientsWB = XLSX.utils.book_new();
+                            XLSX.utils.book_append_sheet(clientsWB, clientsWS, 'Clientes');
+                            XLSX.writeFile(clientsWB, 'clientes.xlsx');
+                          }}
+                          style={{
+                            padding: '0.85rem',
+                            background: '#667eea',
+                            color: 'white',
+                            fontWeight: 600,
+                            border: 'none',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            fontSize: '0.95rem'
+                          }}
+                        >
+                          Descargar clientes
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (!extractedData) return;
+                            const sessionsWS = XLSX.utils.json_to_sheet(extractedData.sessions);
+                            const sessionsWB = XLSX.utils.book_new();
+                            XLSX.utils.book_append_sheet(sessionsWB, sessionsWS, 'Sesiones');
+                            XLSX.writeFile(sessionsWB, 'sesiones.xlsx');
+                          }}
+                          style={{
+                            padding: '0.85rem',
+                            background: '#764ba2',
+                            color: 'white',
+                            fontWeight: 600,
+                            border: 'none',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            fontSize: '0.95rem'
+                          }}
+                        >
+                          Descargar sesiones
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (!extractedData) return;
+                            const phasesWS = XLSX.utils.json_to_sheet(extractedData.projectPhases);
+                            const phasesWB = XLSX.utils.book_new();
+                            XLSX.utils.book_append_sheet(phasesWB, phasesWS, 'Fases');
+                            XLSX.writeFile(phasesWB, 'fases_proyectos.xlsx');
+                          }}
+                          style={{
+                            padding: '0.85rem',
+                            background: '#2b6cb0',
+                            color: 'white',
+                            fontWeight: 600,
+                            border: 'none',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            fontSize: '0.95rem'
+                          }}
+                        >
+                          Descargar fases
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const rootElement = document.getElementById('root');
+    const root = createRoot(rootElement);
+    root.render(<NotesToBitacora />);
+  </script>
+</body>
+</html>
